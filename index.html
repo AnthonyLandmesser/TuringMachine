@@ -5,198 +5,94 @@
     <!--
     Comment
     -->
-    <style>     
-        .box {
-            border: 2px solid;
-            display: flex;
-            flex-direction: row;
+    <style>
+        html {
+            overflow: auto;
+        }
+        body {
+            overflow: hidden;
+            margin: 10px;
+        }
+        #base {
+            background-color: #1a2b3c;
         }
 
-        .box > div {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 2px solid;
+        #current_indicator {
             width: 100px;
 	        height: 100px;
-            transition: 1s;
-        }
-
-        .entry > .value_1 {
-            display: none;
-        }
-
-        .box > .spacer {
-            order: 1;
-        }
-        .box > .start {
-            order: 2;
-        }
-        .box :nth-last-child(4) {
-            order: 3;
-        }
-        .box :nth-last-child(6) {
-            order: 4;
-        }
-        .box :nth-last-child(8) {
-            order: 5;
-        }
-        .box :nth-last-child(10) {
-            order: 6;
-        }
-        .box :nth-last-child(12) {
-            order: 7;
-        }
-        .box :nth-last-child(14) {
-            order: 8;
-        }
-        .box :nth-last-child(16) {
-            order: 9;
-        }
-        .box :nth-last-child(18) {
-            order: 10;
-        }
-        .box :nth-last-child(20) {
-            order: 11;
-        }
-        .box :nth-last-child(22) {
-            order: 12;
-        }
-        .box > .end {
-            order: 13;
-        }
-
-        .start:hover {
-            background-color: #f00;
-        }
-        .start:hover ~ .spacer {
-            display: none;
-        }
-
-        .entry:hover {
-            background-color: #f00;
-        }
-        .entry:hover ~ .spacer {
-            display: none;
-        }
-        .entry:hover > .value_0 {
-            display: none;
-        }
-        .entry:hover > .value_1 {
-            display: flex;
-        }
-        .entry:hover ~ .entry > .value_0 {
-            display: none;
-        }
-        .entry:hover ~ .entry > .value_1 {
-            display: flex;
-        }
-
-        .end:hover {
-            background-color: #f00;
-        }
-        .end:hover ~ .spacer {
-            display: none;
-        }
-        .end:hover ~ .entry > .value_0 {
-            display: none;
-        }
-        .end:hover ~ .entry > .value_1 {
-            display: flex;
-        }
-
-        @keyframes example {
-            from {
-                content: "0";
-            }
-            to {
-                content: "1";
-            }
-        }
-        .test_1 {
-            background-color: red;
-            width: 100px;
-	        height: 100px;
+            background-color: transparent;
+            border: 10px solid red;
             position: absolute;
-            top: 150px;
-            left: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            left: 450px;
         }
-        .test_1::after {
-            content: "";
-            animation-name: example;
-            animation-duration: 1s;
-            animation-iteration-count: infinite;
+
+        #tape {
+            background-color: transparent;
+            display: grid;
+            grid-template-rows: 100px;
+            grid-auto-flow: column;
+            grid-auto-columns: 100px;
+            grid-gap: 10px;
+            border: 10px solid transparent;
+            position: relative;
+            left: 440px;
+            animation: tape_movement 100s 2;
+            animation-timing-function: step-end;
             animation-play-state: paused;
         }
-        .test_1:hover::after {
+
+        @keyframes tape_movement {
+            1% {
+                left: 330px;
+            }
+            2% {
+                left: 220px;
+            }
+            98% {
+                left: 550px;
+            }
+            99% {
+                left: 440px;
+            }
+        }
+
+        #left:hover ~ #base > #tape {
             animation-play-state: running;
         }
-        input[type="checkbox"]:checked ~ .test_1::after {
-            animation-delay: -0.5s;
+        #right:hover ~ #base > #tape {
+            animation-play-state: running;
+            animation-direction: reverse;
+        }
+
+        #tape > div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+        }
+        #start {
+            background-color: #6699ff;
+        }
+        #end {
+            background-color: #66ffff;
+        }
+
+        .value {
+            background-color: black;
         }
     </style>
-
     </head>
     <body>
-        <div class="box">
-            <div class="end">€</div>
-            <div class="entry">
-                <div class="value_0">0</div>
-                <div class="value_1">1</div>
+        <button id="left">left</button>
+        <button id="right">right</button>
+
+        <div id="base">
+            <div id="current_indicator"> </div>
+            <div id="tape">
+                <div id="start"> $ </div>
+                <div class="value"> </div>
+                <div id="end"> € </div>
             </div>
-            <div class="spacer"> </div>
-            <div class="entry">
-                <div class="value_0">0</div>
-                <div class="value_1">1</div>
-            </div>
-            <div class="spacer"> </div>
-            <div class="entry">
-                <div class="value_0">0</div>
-                <div class="value_1">1</div>
-            </div>
-            <div class="spacer"> </div>
-            <div class="entry">
-                <div class="value_0">0</div>
-                <div class="value_1">1</div>
-            </div>
-            <div class="spacer"> </div>
-            <div class="entry">
-                <div class="value_0">0</div>
-                <div class="value_1">1</div>
-            </div>
-            <div class="spacer"> </div>
-            <div class="entry">
-                <div class="value_0">0</div>
-                <div class="value_1">1</div>
-            </div>
-            <div class="spacer"> </div>
-            <div class="entry">
-                <div class="value_0">0</div>
-                <div class="value_1">1</div>
-            </div>
-            <div class="spacer"> </div>
-            <div class="entry">
-                <div class="value_0">0</div>
-                <div class="value_1">1</div>
-            </div>
-            <div class="spacer"> </div>
-            <div class="entry">
-                <div class="value_0">0</div>
-                <div class="value_1">1</div>
-            </div>
-            <div class="spacer"> </div>
-            <div class="entry">
-                <div class="value_0">0</div>
-                <div class="value_1">1</div>
-            </div>
-            <div class="spacer"> </div>
-            <div class="start">$</div>
-            <div class="spacer"> </div>
         </div>
-        <input type="checkbox">
-        <div class="test_1"></div>
     </body>
 </html>
