@@ -13,20 +13,48 @@
             overflow: hidden;
             margin: 10px;
         }
-        #base {
-            display: grid;
-            grid-template-columns: 110px;
-            grid-auto-flow: column;
-            background-color: #1a2b3c;
-        }
-
-        #current_indicator {
+        #current-indicator {
             width: 100px;
 	        height: 100px;
             background-color: transparent;
             border: 10px solid red;
             position: absolute;
             left: 450px;
+        }
+
+        #base {
+            background-color: #1a2b3c;
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 440px;
+            animation: tape-move-right 5s step-end infinite;
+            animation-play-state: paused;
+        }
+        @keyframes tape-move-right {
+            0% {
+                grid-auto-columns: 440px;
+            }
+            20% {
+                grid-auto-columns: 550px;
+            }
+            40% {
+                grid-auto-columns: 660px;
+            }
+            60% {
+                grid-auto-columns: 770px;
+            }
+            80% {
+                grid-auto-columns: 880px;
+            }
+        }
+
+        #position-selector {
+            display: grid;
+            position: relative;
+            left: 0px; /*(number of value cells + 1) * 110px*/
+        }
+        @keyframes shift {
+            
         }
 
         #tape {
@@ -38,41 +66,32 @@
             grid-gap: 10px;
             border: 10px solid transparent;
             position: relative;
-            left: 440px;
-            animation: tape_movement 100s;
-            animation-timing-function: step-end;
+            animation: tape-move-left 5s step-end infinite;
             animation-play-state: paused;
         }
-        @keyframes tape_movement {
-            1% {
-                left: 330px;
-            }
-            2% {
-                left: 220px;
-            }
-            3% {
-                left: 110px;
-            }
-            4% {
+        @keyframes tape-move-left {
+            0% {
                 left: 0px;
             }
-            5% {
+            20% {
                 left: -110px;
             }
-            6% {
+            40% {
                 left: -220px;
             }
-            7% {
+            60% {
                 left: -330px;
+            }
+            80% {
+                left: -440px;
             }
         }
 
-        #left:hover ~ #base > #tape {
+        #left:hover ~ #base > #position-selector > #tape {
             animation-play-state: running;
         }
-        #right:hover ~ #base > #tape {
+        #right:hover ~ #base {
             animation-play-state: running;
-            animation-direction: reverse;
         }
 
         #tape > div {
@@ -97,13 +116,18 @@
         <button id="left">left</button>
         <button id="right">right</button>
 
-        <div id="current_indicator"> </div>
+        <div id="current-indicator"> </div>
         <div id="base">
             <div id="padding"> </div>
-            <div id="tape">
-                <div id="start"> $ </div>
-                <div class="value"> </div>
-                <div id="end"> € </div>
+            <div id="position-selector">
+                <div id="tape">
+                    <div id="start"> $ </div>
+                    <div class="value"> </div>
+                    <div class="value"> </div>
+                    <div class="value"> </div>
+                    <div class="value"> </div>
+                    <div id="end"> € </div>
+                </div>
             </div>
         </div>
     </body>
