@@ -23,10 +23,12 @@
         #current-indicator {
             width: 100px;
 	        height: 100px;
-            background-color: transparent;
-            border: 10px solid red;
+            background-color: red;
+            border: 10px solid;
+            border-color: transparent;
             position: absolute;
             left: 230px;
+            display: none;
         }
         #padding-1 {
             width: 220px;
@@ -52,7 +54,6 @@
         #position-selector {
             display: grid;
             position: relative;
-            left: 0px;
             animation: tape-move-right var(--cycle-time) steps(var(--num-cells), jump-end) infinite;
             animation-play-state: paused;
         }
@@ -68,7 +69,7 @@
         #tape {
             background-color: transparent;
             display: grid;
-            grid-template-rows: 100px;
+            grid-template-rows: 130px;
             grid-auto-flow: column;
             grid-auto-columns: 100px;
             grid-gap: 10px;
@@ -147,11 +148,15 @@
             animation-play-state: running;
         }
 
-        #tape > div {
+        #start, #end {
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 40px;
+            width: 100px;
+            height: 100px;
+            position: relative;
+            top: 30px;
         }
         #start {
             background-color: #6699ff;
@@ -160,8 +165,30 @@
             background-color: #66ffff;
         }
 
+        .cell {
+            display: grid;
+            grid-template-rows: auto auto;
+            grid-template-columns: 100px;
+            grid-gap: 10px;
+        }
         .value {
             background-color: black;
+            width: 100px;
+            height: 100px;
+        }
+
+        #lock-in:checked ~ #base > #position-selector > #tape {
+            grid-template-rows: 100px;
+        }
+        #lock-in:checked ~ #base > #position-selector > #tape > #start,
+        #lock-in:checked ~ #base > #position-selector > #tape > #end {
+            top: 0px;
+        }
+        #lock-in:checked ~ #base > #current-indicator {
+            display: block;
+        }
+        #lock-in:checked ~ #base > #position-selector > #tape > .cell > input {
+            display: none;
         }
     </style>
     </head>
@@ -171,15 +198,23 @@
         <button id="right-1">right 1</button>
         <button id="right-2">right 2</button>
 
-        <div id="current-indicator"> </div>
+        <input type="checkbox" id="lock-in">
+
         <div id="base">
             <div id="padding-1"> </div>
+            <div id="current-indicator"> </div>
             <div id="padding-2"> </div>
             <div id="position-selector">
                 <div id="tape">
                     <div id="start"> $ </div>
-                    <div class="value"> </div>
-                    <div class="value"> </div>
+                    <div class="cell">
+                        <input type="checkbox" class="check">
+                        <div class="value"> </div>
+                    </div>
+                    <div class="cell">
+                        <input type="checkbox">
+                        <div class="value"> </div>
+                    </div>
                     <div id="end"> € </div>
                 </div>
             </div>
