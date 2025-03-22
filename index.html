@@ -6,6 +6,13 @@
     Comment
     -->
     <style>
+        :root {
+            --num-cells: 3; /*exclude start cell*/
+            --transition-time: 2s; /*technically double the transition time*/
+            --cycle-time: 3s; /*--num-cells * --transition-time / 2*/
+            --tape-length: 330px; /*--num-cells * 110px*/
+            --negative-tape-length: -330px; /*-1 * --tape-length*/
+        }
         html {
             overflow: auto;
         }
@@ -21,20 +28,24 @@
             position: absolute;
             left: 230px;
         }
+        #padding-1 {
+            width: 220px;
+        }
 
         #base {
             background-color: #1a2b3c;
             display: grid;
             grid-auto-flow: column;
-            animation: shift 2s step-end infinite;
+            grid-template-columns: 220px;
+            animation: shift var(--transition-time) steps(2, jump-end) infinite;
             animation-play-state: paused;
         }
         @keyframes shift {
             from {
-                grid-auto-columns: 770px;
+                grid-auto-columns: var(--tape-length);
             }
-            50% {
-                grid-auto-columns: 220px;
+            to {
+                grid-auto-columns: 0px;
             }
         }
 
@@ -42,12 +53,12 @@
             display: grid;
             position: relative;
             left: 0px;
-            animation: tape-move-right 5s steps(5, jump-end) infinite;
+            animation: tape-move-right var(--cycle-time) steps(var(--num-cells), jump-end) infinite;
             animation-play-state: paused;
         }
         @keyframes tape-move-right {
             from {
-                left: -550px;
+                left: var(--negative-tape-length);
             }
             to {
                 left: 0px;
@@ -63,7 +74,7 @@
             grid-gap: 10px;
             border: 10px solid transparent;
             position: relative;
-            animation: tape-move-left 5s steps(5, jump-end) infinite; /*5 is number of cells*/
+            animation: tape-move-left var(--cycle-time) steps(var(--num-cells), jump-end) infinite;
             animation-play-state: paused;
         }
         @keyframes tape-move-left {
@@ -71,28 +82,28 @@
                 left: 0px;
             }
             to {
-                left: -550px; /*-110px * (number of value cells + 1)*/
+                left: var(--negative-tape-length);
             }
         }
 
         #left-1 {
             position: absolute;
-            z-index: 5;
+            z-index: var(--num-cells);
         }
         #left-2 {
             position: relative;
             z-index: 0;
-            animation: appear 5s steps(5, jump-start) infinite;
+            animation: appear var(--cycle-time) steps(var(--num-cells), jump-start) infinite;
             animation-play-state: paused;
         }
         #right-1 {
             position: absolute;
-            z-index: 5;
+            z-index: var(--num-cells);
         }
         #right-2 {
             position: relative;
             z-index: 0;
-            animation: appear 5s steps(5, jump-start) infinite;
+            animation: appear var(--cycle-time) steps(var(--num-cells), jump-start) infinite;
             animation-play-state: paused;
         }
         @keyframes appear {
@@ -100,7 +111,7 @@
                 z-index: 0;
             }
             to {
-                z-index: 5;
+                z-index: var(--num-cells);
             }
         }
 
@@ -162,12 +173,11 @@
 
         <div id="current-indicator"> </div>
         <div id="base">
-            <div id="padding"> </div>
+            <div id="padding-1"> </div>
+            <div id="padding-2"> </div>
             <div id="position-selector">
                 <div id="tape">
                     <div id="start"> $ </div>
-                    <div class="value"> </div>
-                    <div class="value"> </div>
                     <div class="value"> </div>
                     <div class="value"> </div>
                     <div id="end"> € </div>
