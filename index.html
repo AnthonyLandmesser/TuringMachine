@@ -23,9 +23,7 @@
         #current-indicator {
             width: 100px;
 	        height: 100px;
-            background-color: red;
-            border: 10px solid;
-            border-color: transparent;
+            border: 10px solid red;
             position: absolute;
             left: 230px;
             display: none;
@@ -41,6 +39,7 @@
             grid-template-columns: 220px;
             animation: shift var(--transition-time) steps(2, jump-end) infinite;
             animation-play-state: paused;
+            overflow: scroll;
         }
         @keyframes shift {
             from {
@@ -69,7 +68,7 @@
         #tape {
             background-color: transparent;
             display: grid;
-            grid-template-rows: 130px;
+            grid-template-rows: 120px;
             grid-auto-flow: column;
             grid-auto-columns: 100px;
             grid-gap: 10px;
@@ -156,7 +155,7 @@
             width: 100px;
             height: 100px;
             position: relative;
-            top: 30px;
+            top: 20px;
         }
         #start {
             background-color: #6699ff;
@@ -167,9 +166,9 @@
 
         .cell {
             display: grid;
+            background-color: rebeccapurple;
             grid-template-rows: auto auto;
             grid-template-columns: 100px;
-            grid-gap: 10px;
         }
         .value {
             background-color: black;
@@ -187,8 +186,11 @@
         #lock-in:checked ~ #base > #current-indicator {
             display: block;
         }
-        #lock-in:checked ~ #base > #position-selector > #tape > .cell > input {
+        #lock-in:checked ~ #base > #position-selector > #tape > .cell > .check {
             display: none;
+        }
+        #lock-in:checked ~ #base {
+            overflow: visible;
         }
     </style>
     </head>
@@ -212,7 +214,7 @@
                         <div class="value"> </div>
                     </div>
                     <div class="cell">
-                        <input type="checkbox">
+                        <input type="checkbox" class="check">
                         <div class="value"> </div>
                     </div>
                     <div id="end"> € </div>
