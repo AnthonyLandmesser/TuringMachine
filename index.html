@@ -147,7 +147,7 @@
             animation-play-state: running;
         }
 
-        #start, #end {
+        #start, #end, .value {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -155,13 +155,14 @@
             width: 100px;
             height: 100px;
             position: relative;
-            top: 20px;
         }
         #start {
             background-color: #6699ff;
+            top: 20px;
         }
         #end {
             background-color: #66ffff;
+            top: 20px;
         }
 
         .cell {
@@ -172,8 +173,22 @@
         }
         .value {
             background-color: black;
-            width: 100px;
-            height: 100px;
+        }
+        @keyframes flip {
+            from {
+                content: "0";
+            }
+            to {
+                content: "1";
+            }
+        }
+        .value::after {
+            content: "";
+            animation: flip 1s steps(2, jump-end) infinite;
+            animation-play-state: paused;
+        }
+        .check:checked ~ .value::after {
+            animation-delay: -0.5s;
         }
 
         #lock-in:checked ~ #base > #position-selector > #tape {
