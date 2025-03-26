@@ -7,11 +7,9 @@
     -->
     <style>
         :root {
-            --num-cells: 3; /*exclude start cell*/
-            --transition-time: 2s; /*technically double the transition time*/
-            --cycle-time: 3s; /*--num-cells * --transition-time / 2*/
-            --tape-length: 330px; /*--num-cells * 110px*/
-            --negative-tape-length: -330px; /*-1 * --tape-length*/
+            --num-cells: 4; /*includes start and end cells*/
+            --time-step: 1s; /**/
+            --cell-length: 110px; /**/
         }
         html {
             overflow: auto;
@@ -46,8 +44,14 @@
             border: 10px solid transparent;
             position: relative;
             animation: tape-move-left, tape-move-right, tape-shift;
-            animation-duration: var(--cycle-time), var(--cycle-time), var(--transition-time);
-            animation-timing-function: steps(var(--num-cells), jump-end), steps(var(--num-cells), jump-end), steps(2, jump-none);
+            animation-duration:
+                calc((var(--num-cells) - 1) * var(--time-step)),
+                calc((var(--num-cells) - 1) * var(--time-step)),
+                calc(2 * var(--time-step));
+            animation-timing-function:
+                steps(calc(var(--num-cells) - 1), jump-end),
+                steps(calc(var(--num-cells) - 1), jump-end),
+                steps(2, jump-none);
             animation-iteration-count: infinite;
             animation-play-state: paused;
         }
@@ -56,12 +60,12 @@
                 left: 0px;
             }
             to {
-                left: var(--negative-tape-length);
+                left: calc((1 - var(--num-cells)) * var(--cell-length));
             }
         }
         @keyframes tape-move-right {
             from {
-                translate: var(--negative-tape-length);
+                translate: calc((1 - var(--num-cells)) * var(--cell-length));
             }
             to {
                 translate: 0px;
@@ -69,7 +73,7 @@
         }
         @keyframes tape-shift {
             from {
-                transform: translateX(var(--tape-length));
+                transform: translateX(calc((var(--num-cells) - 1) * var(--cell-length)));
             }
             to {
                 transform: translateX(0px);
@@ -78,22 +82,22 @@
 
         #left-1 {
             position: absolute;
-            z-index: var(--num-cells);
+            z-index: calc(var(--num-cells) - 1);
         }
         #left-2 {
             position: relative;
             z-index: 0;
-            animation: appear var(--cycle-time) steps(var(--num-cells), jump-start) infinite;
+            animation: appear calc((var(--num-cells) - 1) * var(--time-step)) steps(calc(var(--num-cells) - 1), jump-start) infinite;
             animation-play-state: paused;
         }
         #right-1 {
             position: absolute;
-            z-index: var(--num-cells);
+            z-index: calc(var(--num-cells) - 1);
         }
         #right-2 {
             position: relative;
             z-index: 0;
-            animation: appear var(--cycle-time) steps(var(--num-cells), jump-start) infinite;
+            animation: appear calc((var(--num-cells) - 1) * var(--time-step)) steps(calc(var(--num-cells) - 1), jump-start) infinite;
             animation-play-state: paused;
         }
         @keyframes appear {
@@ -101,7 +105,7 @@
                 z-index: 0;
             }
             to {
-                z-index: var(--num-cells);
+                z-index: calc(var(--num-cells) - 1);
             }
         }
 
