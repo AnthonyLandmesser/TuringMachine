@@ -54,6 +54,7 @@
                 steps(2, jump-none);
             animation-iteration-count: infinite;
             animation-play-state: paused;
+            animation-composition: add;
         }
         @keyframes tape-move-left {
             from {
@@ -65,18 +66,26 @@
         }
         @keyframes tape-move-right {
             from {
-                translate: calc((1 - var(--num-cells)) * var(--cell-length));
+                left: calc((1 - var(--num-cells)) * var(--cell-length));
             }
             to {
-                translate: 0px;
+                left: 0px;
             }
         }
         @keyframes tape-shift {
             from {
-                transform: translateX(calc((var(--num-cells) - 1) * var(--cell-length)));
+                left: calc((var(--num-cells) - 1) * var(--cell-length));
             }
             to {
-                transform: translateX(0px);
+                left: 0px;
+            }
+        }
+        @keyframes timer {
+            from {
+                
+            }
+            to {
+                animation-duration: ;
             }
         }
 
