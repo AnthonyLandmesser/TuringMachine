@@ -18,18 +18,14 @@
         }
         body {
             overflow: hidden;
-            margin: 10px;
         }
         #current-indicator {
             width: 100px;
 	        height: 100px;
             border: 10px solid red;
             position: absolute;
-            left: 230px;
+            margin-left: 220px;
             display: none;
-        }
-        #padding-1 {
-            width: 220px;
         }
 
         #base {
@@ -37,32 +33,7 @@
             display: grid;
             grid-auto-flow: column;
             grid-template-columns: 220px;
-            animation: shift var(--transition-time) steps(2, jump-end) infinite;
-            animation-play-state: paused;
             overflow-x: scroll;
-        }
-        @keyframes shift {
-            from {
-                grid-auto-columns: var(--tape-length);
-            }
-            to {
-                grid-auto-columns: 0px;
-            }
-        }
-
-        #position-selector {
-            display: grid;
-            position: relative;
-            animation: tape-move-right var(--cycle-time) steps(var(--num-cells), jump-end) infinite;
-            animation-play-state: paused;
-        }
-        @keyframes tape-move-right {
-            from {
-                left: var(--negative-tape-length);
-            }
-            to {
-                left: 0px;
-            }
         }
 
         #tape {
@@ -74,7 +45,10 @@
             grid-gap: 10px;
             border: 10px solid transparent;
             position: relative;
-            animation: tape-move-left var(--cycle-time) steps(var(--num-cells), jump-end) infinite;
+            animation: tape-move-left, tape-move-right, tape-shift;
+            animation-duration: var(--cycle-time), var(--cycle-time), var(--transition-time);
+            animation-timing-function: steps(var(--num-cells), jump-end), steps(var(--num-cells), jump-end), steps(2, jump-none);
+            animation-iteration-count: infinite;
             animation-play-state: paused;
         }
         @keyframes tape-move-left {
@@ -83,6 +57,22 @@
             }
             to {
                 left: var(--negative-tape-length);
+            }
+        }
+        @keyframes tape-move-right {
+            from {
+                translate: var(--negative-tape-length);
+            }
+            to {
+                translate: 0px;
+            }
+        }
+        @keyframes tape-shift {
+            from {
+                transform: translateX(var(--tape-length));
+            }
+            to {
+                transform: translateX(0px);
             }
         }
 
@@ -118,33 +108,27 @@
         #left-1:hover ~ #left-2 {
             animation-play-state: running;
         }
-        #left-1:hover ~ #base > #position-selector > #tape {
-            animation-play-state: running;
+        #left-1:hover ~ #base > #tape {
+            animation-play-state: running, paused, paused;
         }
         #left-2:hover {
             animation-play-state: running;
         }
-        #left-2:hover ~ #base > #position-selector > #tape {
-            animation-play-state: running;
-        }
-        #left-2:hover ~ #base {
-            animation-play-state: running;
+        #left-2:hover ~ #base > #tape {
+            animation-play-state: running, paused, running;
         }
 
         #right-1:hover ~ #right-2 {
             animation-play-state: running;
         }
-        #right-1:hover ~ #base > #position-selector {
-            animation-play-state: running;
+        #right-1:hover ~ #base > #tape {
+            animation-play-state: paused, running, paused;
         }
         #right-2:hover {
             animation-play-state: running;
         }
-        #right-2:hover ~ #base > #position-selector {
-            animation-play-state: running;
-        }
-        #right-2:hover ~ #base {
-            animation-play-state: running;
+        #right-2:hover ~ #base > #tape {
+            animation-play-state: paused, running, running;
         }
 
         #start, #end, .value {
@@ -191,17 +175,16 @@
             animation-delay: -0.5s;
         }
 
-        #lock-in:checked ~ #base > #position-selector > #tape {
+        #lock-in:checked ~ #base > #tape {
             grid-template-rows: 100px;
         }
-        #lock-in:checked ~ #base > #position-selector > #tape > #start,
-        #lock-in:checked ~ #base > #position-selector > #tape > #end {
+        #lock-in:checked ~ #base > #tape > #start, #lock-in:checked ~ #base > #tape > #end {
             top: 0px;
         }
         #lock-in:checked ~ #base > #current-indicator {
             display: block;
         }
-        #lock-in:checked ~ #base > #position-selector > #tape > .cell > .check {
+        #lock-in:checked ~ #base > #tape > .cell > .check {
             display: none;
         }
         #lock-in:checked ~ #base {
@@ -218,22 +201,19 @@
         <input type="checkbox" id="lock-in">
 
         <div id="base">
-            <div id="padding-1"> </div>
+            <div id="padding"> </div>
             <div id="current-indicator"> </div>
-            <div id="padding-2"> </div>
-            <div id="position-selector">
-                <div id="tape">
-                    <div id="start"> $ </div>
-                    <div class="cell">
-                        <input type="checkbox" class="check">
-                        <div class="value"> </div>
-                    </div>
-                    <div class="cell">
-                        <input type="checkbox" class="check">
-                        <div class="value"> </div>
-                    </div>
-                    <div id="end"> € </div>
+            <div id="tape">
+                <div id="start"> $ </div>
+                <div class="cell">
+                    <input type="checkbox" class="check">
+                    <div class="value"> </div>
                 </div>
+                <div class="cell">
+                    <input type="checkbox" class="check">
+                    <div class="value"> </div>
+                </div>
+                <div id="end"> € </div>
             </div>
         </div>
     </body>
