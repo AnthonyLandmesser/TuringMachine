@@ -18,13 +18,23 @@
             overflow: hidden;
         }
         
-        #current-indicator {
+        #current-indicator, #option {
             width: 100px;
 	        height: 100px;
-            border: 10px solid red;
             position: absolute;
+        }
+        
+        #current-indicator {
             margin-left: 220px;
+            border: 10px solid red;
             display: none;
+        }
+
+        #option {
+            background-color: transparent;
+            margin-left: 230px;
+            margin-top: 10px;
+            z-index: 2;
         }
 
         #base {
@@ -148,11 +158,13 @@
         #start {
             background-color: #6699ff;
             top: 20px;
+            z-index: 3;
         }
 
         #end {
             background-color: #66ffff;
             top: 20px;
+            z-index: 3;
         }
 
         /* Sets up value cells */
@@ -165,16 +177,28 @@
         }
 
         .value {
-            background-color: black;
-        }
-        
-        .value::after {
-            content: "";
             animation: flip 1s steps(2, jump-end) infinite;
             animation-play-state: paused;
         }
 
         @keyframes flip {
+            from {
+                background-color: black;
+                z-index: 1;
+            }
+            to {
+                background-color: grey;
+                z-index: 3;
+            }
+        }
+        
+        .value::after {
+            content: "";
+            animation: flip-content 1s steps(2, jump-end) infinite;
+            animation-play-state: paused;
+        }
+
+        @keyframes flip-content {
             from {
                 content: "0";
             }
@@ -184,6 +208,10 @@
         }
 
         .check:checked ~ .value::after {
+            animation-delay: -0.5s;
+        }
+
+        .check:checked ~ .value {
             animation-delay: -0.5s;
         }
 
@@ -208,6 +236,11 @@
         #lock-in:checked ~ #base {
             overflow: visible;
         }
+
+        /* test */
+        #option:hover {
+            background-color: #00ff00;
+        }
     </style>
     </head>
     <body>
@@ -220,6 +253,7 @@
 
         <div id="base">
             <div id="current-indicator"> </div>
+            <div id="option"></div>
             <div id="tape">
                 <div id="start"> $ </div>
                 <div class="cell">
