@@ -15,7 +15,7 @@
         }
         
         body {
-            overflow: hidden;
+            overflow: visible;
         }
         
         #current-indicator, #option {
@@ -31,6 +31,7 @@
         }
 
         #option {
+            /* min-width: 220px; */
             background-color: transparent;
             margin-left: 230px;
             margin-top: 10px;
@@ -235,7 +236,8 @@
         }
         
         #lock-in:checked ~ #base {
-            overflow: visible;
+            min-width: 330px;
+            overflow: hidden;
         }
 
         /* test */
