@@ -8,26 +8,28 @@
             --num-cells: 4; /* Includes start and end cells */
             --time-step: 1s;
             --cell-length: 110px; /* Probably doesn't need to be a variable */
+            --margin: 8px;
         }
 
         html {
             overflow: auto;
         }
-        
+
         body {
-            overflow: visible;
+            margin: var(--margin);
+            overflow: hidden;
         }
         
         #current-indicator, #option {
             width: 100px;
 	        height: 100px;
             position: absolute;
+            display: none;
         }
         
         #current-indicator {
             margin-left: 220px;
             border: 10px solid red;
-            display: none;
         }
 
         #option {
@@ -47,7 +49,7 @@
 
         #tape {
             left: 220px;
-            width: 0px;
+            width: calc(var(--num-cells) * var(--cell-length) - 10px);
             background-color: transparent;
             display: grid;
             grid-template-rows: 120px;
@@ -100,18 +102,27 @@
         /* Sets up buttons to move tape */
 
         #left-1, #right-1 {
-            position: absolute;
             z-index: calc(var(--num-cells) - 1);
         }
 
         #left-2, #right-2 {
-            position: relative;
             z-index: 0;
             animation-name: appear;
             animation-duration: calc((var(--num-cells) - 1) * var(--time-step));
             animation-timing-function: steps(calc(var(--num-cells) - 1), jump-start);
             animation-iteration-count: infinite;
             animation-play-state: paused;
+        }
+
+        #left-1, #left-2 {
+            position: absolute;
+            top: 200px;
+        }
+
+        #right-1, #right-2 {
+            position: absolute;
+            top: 200px;
+            left: 100px;
         }
 
         @keyframes appear {
@@ -220,6 +231,7 @@
         /* Locks in input */
         
         #lock-in:checked ~ #base #tape {
+            width: 0px;
             grid-template-rows: 100px;
         }
         
@@ -236,8 +248,11 @@
         }
         
         #lock-in:checked ~ #base {
-            min-width: 330px;
-            overflow: hidden;
+            overflow: clip;
+        }
+
+        html:has(#lock-in:checked) {
+            min-width: calc(450px + 2 * var(--margin));
         }
 
         /* test */
