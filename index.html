@@ -106,12 +106,13 @@
         }
 
         #left-2, #right-2 {
-            z-index: 0;
+            z-index: 10;
             animation-name: appear;
-            animation-duration: calc((var(--num-cells) - 1) * var(--time-step));
-            animation-timing-function: steps(calc(var(--num-cells) - 1), jump-start);
+            animation-duration: calc(var(--num-cells) * var(--time-step));
+            animation-timing-function: steps(var(--num-cells), jump-end);
             animation-iteration-count: infinite;
             animation-play-state: paused;
+            animation-delay: -1s;
         }
 
         #left-1, #left-2 {
@@ -127,10 +128,10 @@
 
         @keyframes appear {
             from {
-                z-index: 0;
+                visibility: hidden;
             }
             to {
-                z-index: calc(var(--num-cells) - 1);
+                visibility: inherit;
             }
         }
 
@@ -239,10 +240,11 @@
             top: 0px;
         }
         
-        #lock-in:checked ~ #base #current-indicator {
+        #lock-in:checked ~ #base #current-indicator,
+        #lock-in:checked ~ #base #option {
             display: block;
         }
-        
+
         #lock-in:checked ~ #base .check {
             display: none;
         }
@@ -255,9 +257,67 @@
             min-width: calc(450px + 2 * var(--margin));
         }
 
-        /* test */
-        #option:hover {
-            background-color: #00ff00;
+        /* move's tape right */
+        #right {
+            animation-name: appear;
+            animation-duration: calc(2 * var(--time-step));
+            animation-timing-function: steps(2, jump-end);
+            animation-iteration-count: infinite;
+            animation-play-state: paused;
+        }
+
+        #right-end {
+            display: block;
+            position: relative;
+            z-index: 10;
+            background-color: red;
+            height: 100px;
+            width: 100px;
+        }
+
+        #right-step {
+            position: relative;
+            z-index: 11;
+            background-color: blue;
+            height: 100px;
+            width: 100px;
+
+            animation-name: appear;
+            animation-duration: calc(2 * (var(--num-cells) - 1) * var(--time-step));
+            animation-timing-function: steps(var(--num-cells), jump-end);
+            animation-iteration-count: infinite;
+            animation-play-state: paused;
+            animation-delay: -1s;
+        }
+
+        #right-end, #right-step {
+            position: absolute;
+            margin-left: 230px;
+            margin-top: 10px;
+            height: 100px;
+            width: 100px;
+
+        }
+
+        body:has(#option:hover, #start:hover, #right-step:hover, #right-end:hover) :is(#right, #right-step, #updater) {
+            animation-play-state: running;
+        }
+
+        body:has(#right-step:hover) #tape {
+            animation-play-state: running, paused, paused;
+        }
+
+        body:has(#right-end:hover) #tape {
+            animation-play-state: running, paused, running;
+        }
+
+        #updater {
+            position: absolute;
+            animation: tape-shift;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            animation-timing-function: steps(2, jump-end);
+            animation-play-state: paused;
         }
     </style>
     </head>
@@ -268,10 +328,17 @@
         <button id="right-2">right 2</button>
 
         <input type="checkbox" id="lock-in">
+        <div id="updater"> </div>
 
         <div id="base">
             <div id="current-indicator"> </div>
-            <div id="option"></div>
+            
+            <div id="right">
+                <div id="right-step"> </div>
+                <div id="right-end"> </div>
+            </div>
+
+            <div id="option"> </div>
             <div id="tape">
                 <div id="start"> $ </div>
                 <div class="cell">
