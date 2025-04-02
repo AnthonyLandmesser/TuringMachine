@@ -296,7 +296,6 @@
             margin-top: 10px;
             height: 100px;
             width: 100px;
-
         }
 
         body:has(#option:hover, #start:hover, #right-step:hover, #right-end:hover) :is(#right, #right-step, #updater) {
@@ -314,10 +313,63 @@
         #updater {
             position: absolute;
             animation: tape-shift;
-            animation-duration: 2s;
+            animation-duration: calc(2 * var(--time-step));
             animation-iteration-count: infinite;
             animation-timing-function: steps(2, jump-end);
             animation-play-state: paused;
+        }
+
+        /* move's tape left */
+        #left {
+            animation-name: appear;
+            animation-duration: calc(2 * var(--time-step));
+            animation-timing-function: steps(2, jump-end);
+            animation-iteration-count: infinite;
+            animation-play-state: paused;
+        }
+
+        #left-end {
+            display: block;
+            position: relative;
+            z-index: 10;
+            background-color: red;
+            height: 100px;
+            width: 100px;
+        }
+
+        #left-step {
+            position: relative;
+            z-index: 11;
+            background-color: blue;
+            height: 100px;
+            width: 100px;
+
+            animation-name: appear;
+            animation-duration: calc(2 * (var(--num-cells) - 1) * var(--time-step));
+            animation-timing-function: steps(var(--num-cells), jump-end);
+            animation-iteration-count: infinite;
+            animation-play-state: paused;
+            animation-delay: -1s;
+        }
+
+        #left-end, #left-step {
+            position: absolute;
+            margin-left: 230px;
+            margin-top: 10px;
+            height: 100px;
+            width: 100px;
+        }
+
+        body:has(.value:hover, #left-step:hover, #left-end:hover) :is(#left, #left-step, #updater) {
+            animation-play-state: running;
+        }
+
+        body:has(#left-step:hover) #tape {
+            animation-play-state: paused, running, paused;
+        }
+
+        body:has(#left-end:hover) #tape {
+            animation-play-state: paused, running, running;
         }
     </style>
     </head>
@@ -336,6 +388,10 @@
             <div id="right">
                 <div id="right-step"> </div>
                 <div id="right-end"> </div>
+            </div>
+            <div id="left">
+                <div id="left-step"> </div>
+                <div id="left-end"> </div>
             </div>
 
             <div id="option"> </div>
