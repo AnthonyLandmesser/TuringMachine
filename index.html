@@ -264,6 +264,7 @@
             animation-timing-function: steps(2, jump-end);
             animation-iteration-count: infinite;
             animation-play-state: paused;
+            animation-delay: -0.5s;
         }
 
         #right-end {
@@ -287,7 +288,7 @@
             animation-timing-function: steps(var(--num-cells), jump-end);
             animation-iteration-count: infinite;
             animation-play-state: paused;
-            animation-delay: -1s;
+            animation-delay: -1.5s;
         }
 
         #right-end, #right-step {
@@ -298,7 +299,11 @@
             width: 100px;
         }
 
-        body:has(#option:hover, #start:hover, #right-step:hover, #right-end:hover) :is(#right, #right-step, #updater) {
+        body:has(#option:hover, #start:hover, .value:hover) :is(#updater) {
+            animation-play-state: running;
+        }
+
+        body:has(#option:hover, #start:hover, #right-step:hover, #right-end:hover) :is(#right, #right-step) {
             animation-play-state: running;
         }
 
@@ -313,7 +318,7 @@
         #updater {
             position: absolute;
             animation: tape-shift;
-            animation-duration: calc(2 * var(--time-step));
+            animation-duration: calc(1 * var(--time-step));
             animation-iteration-count: infinite;
             animation-timing-function: steps(2, jump-end);
             animation-play-state: paused;
@@ -326,6 +331,7 @@
             animation-timing-function: steps(2, jump-end);
             animation-iteration-count: infinite;
             animation-play-state: paused;
+            animation-delay: -0.5s;
         }
 
         #left-end {
@@ -349,7 +355,7 @@
             animation-timing-function: steps(var(--num-cells), jump-end);
             animation-iteration-count: infinite;
             animation-play-state: paused;
-            animation-delay: -1s;
+            animation-delay: -1.5s;
         }
 
         #left-end, #left-step {
@@ -360,7 +366,7 @@
             width: 100px;
         }
 
-        body:has(.value:hover, #left-step:hover, #left-end:hover) :is(#left, #left-step, #updater) {
+        body:has(.value:hover, #left-step:hover, #left-end:hover) :is(#left, #left-step) {
             animation-play-state: running;
         }
 
