@@ -20,7 +20,7 @@
             overflow: hidden;
         }
         
-        #current-indicator, #option {
+        #current-indicator, .option {
             width: 100px;
 	        height: 100px;
             position: absolute;
@@ -32,11 +32,8 @@
             border: 10px solid red;
         }
 
-        #option {
-            /* min-width: 220px; */
+        .option {
             background-color: transparent;
-            margin-left: 230px;
-            margin-top: 10px;
             z-index: 2;
         }
 
@@ -69,6 +66,7 @@
                 steps(2, jump-none);
             animation-iteration-count: infinite;
             animation-play-state: paused;
+            animation-delay: 0s, 0s, calc(-0.1 * var(--time-step));
             animation-composition: add;
         }
 
@@ -92,10 +90,10 @@
 
         @keyframes tape-shift {
             from {
-                left: calc((var(--num-cells) - 1) * var(--cell-length));
+                translate: calc((var(--num-cells) - 1) * var(--cell-length));
             }
             to {
-                left: 0px;
+                translate: 0px;
             }
         }
 
@@ -191,7 +189,7 @@
         }
 
         .value {
-            animation: flip 1s steps(2, jump-end) infinite;
+            animation: flip 1s steps(2) infinite;
             animation-play-state: paused;
         }
 
@@ -202,13 +200,13 @@
             }
             to {
                 background-color: grey;
-                z-index: 3;
+                z-index: 4;
             }
         }
         
         .value::after {
             content: "";
-            animation: flip-content 1s steps(2, jump-end) infinite;
+            animation: flip-content 1s steps(2) infinite;
             animation-play-state: paused;
         }
 
@@ -241,7 +239,7 @@
         }
         
         #lock-in:checked ~ #base #current-indicator,
-        #lock-in:checked ~ #base #option {
+        #lock-in:checked ~ #base .option {
             display: block;
         }
 
@@ -264,7 +262,7 @@
             animation-timing-function: steps(2, jump-end);
             animation-iteration-count: infinite;
             animation-play-state: paused;
-            animation-delay: -0.5s;
+            animation-delay: calc(-0.5 * var(--time-step));
         }
 
         #right-end {
@@ -288,7 +286,7 @@
             animation-timing-function: steps(var(--num-cells), jump-end);
             animation-iteration-count: infinite;
             animation-play-state: paused;
-            animation-delay: -1.5s;
+            animation-delay: calc(-1.5 * var(--time-step));
         }
 
         #right-end, #right-step {
@@ -299,11 +297,11 @@
             width: 100px;
         }
 
-        body:has(#option:hover, #start:hover, .value:hover) :is(#updater) {
+        body:has(.option:hover, #start:hover, .value:hover) :is(#updater) {
             animation-play-state: running;
         }
 
-        body:has(#option:hover, #start:hover, #right-step:hover, #right-end:hover) :is(#right, #right-step) {
+        body:has(.option:hover, #start:hover, #right-step:hover, #right-end:hover) :is(#right, #right-step) {
             animation-play-state: running;
         }
 
@@ -317,8 +315,8 @@
 
         #updater {
             position: absolute;
-            animation: tape-shift;
-            animation-duration: calc(1 * var(--time-step));
+            animation: tape-move-left;
+            animation-duration: calc(2 * var(--time-step));
             animation-iteration-count: infinite;
             animation-timing-function: steps(2, jump-end);
             animation-play-state: paused;
@@ -331,7 +329,7 @@
             animation-timing-function: steps(2, jump-end);
             animation-iteration-count: infinite;
             animation-play-state: paused;
-            animation-delay: -0.5s;
+            animation-delay: calc(-0.5 * var(--time-step));
         }
 
         #left-end {
@@ -355,7 +353,7 @@
             animation-timing-function: steps(var(--num-cells), jump-end);
             animation-iteration-count: infinite;
             animation-play-state: paused;
-            animation-delay: -1.5s;
+            animation-delay: calc(-1.5 * var(--time-step));
         }
 
         #left-end, #left-step {
@@ -400,16 +398,17 @@
                 <div id="left-end"> </div>
             </div>
 
-            <div id="option"> </div>
             <div id="tape">
                 <div id="start"> $ </div>
                 <div class="cell">
                     <input type="checkbox" class="check">
                     <div class="value"> </div>
+                    <div class="option"> </div>
                 </div>
                 <div class="cell">
                     <input type="checkbox" class="check">
                     <div class="value"> </div>
+                    <div class="option"> </div>
                 </div>
                 <div id="end"> € </div>
             </div>
