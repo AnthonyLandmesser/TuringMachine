@@ -6,7 +6,7 @@
     <style>
         :root {
             --num-cells: 4; /* Includes start and end cells */
-            --time-step: 1s;
+            --time-step: 0.1s;
             --cell-length: 110px; /* Probably doesn't need to be a variable */
             --margin: 8px;
         }
@@ -29,11 +29,31 @@
         
         #current-indicator {
             margin-left: 220px;
-            border: 10px solid red;
+            margin-right: calc(var(--num-cells) * var(--cell-length));
+            border: 10px solid;
+            border-color: red;
+            z-index: 20;
+            animation: indicator-animation 2s linear;
+            animation-fill-mode: forwards;
+            animation-play-state: paused;
+        }
+
+        @keyframes indicator-animation {
+            to {
+                border-color: blueviolet;
+                z-index: 0;
+            }
+        }
+
+        #current-indicator:hover {
+            animation-play-state: running;
+        }
+
+        body:has(#current-indicator:hover) #updater {
+            animation-play-state: running;
         }
 
         .option {
-            background-color: transparent;
             z-index: 2;
         }
 
@@ -47,7 +67,6 @@
         #tape {
             left: 220px;
             width: calc(var(--num-cells) * var(--cell-length) - 10px);
-            background-color: transparent;
             display: grid;
             grid-template-rows: 120px;
             grid-auto-flow: column dense;
@@ -97,64 +116,6 @@
             }
         }
 
-        /* Sets up buttons to move tape */
-
-        #left-1, #right-1 {
-            z-index: calc(var(--num-cells) - 1);
-        }
-
-        #left-2, #right-2 {
-            z-index: 10;
-            animation-name: appear;
-            animation-duration: calc(var(--num-cells) * var(--time-step));
-            animation-timing-function: steps(var(--num-cells), jump-end);
-            animation-iteration-count: infinite;
-            animation-play-state: paused;
-            animation-delay: -1s;
-        }
-
-        #left-1, #left-2 {
-            position: absolute;
-            top: 200px;
-        }
-
-        #right-1, #right-2 {
-            position: absolute;
-            top: 200px;
-            left: 100px;
-        }
-
-        @keyframes appear {
-            from {
-                visibility: hidden;
-            }
-            to {
-                visibility: inherit;
-            }
-        }
-
-        /* Ensures that buttons cycle */
-        #left-1:hover ~ #left-2, #left-2:hover,
-        #right-1:hover ~ #right-2, #right-2:hover {
-            animation-play-state: running;
-        }
-
-        #left-1:hover ~ #base #tape {
-            animation-play-state: running, paused, paused;
-        }
-
-        #left-2:hover ~ #base #tape {
-            animation-play-state: running, paused, running;
-        }
-
-        #right-1:hover ~ #base #tape {
-            animation-play-state: paused, running, paused;
-        }
-
-        #right-2:hover ~ #base #tape {
-            animation-play-state: paused, running, running;
-        }
-
         /* Sets up text and base cells */
 
         #start, #end, .value {
@@ -186,6 +147,7 @@
             background-color: rebeccapurple;
             grid-template-rows: auto auto;
             grid-template-columns: 100px;
+            grid-gap: 1px;
         }
 
         .value {
@@ -227,7 +189,20 @@
             animation-delay: -0.5s;
         }
 
+        #blocker {
+            position: absolute;
+            height: 100px;
+            width: calc(var(--num-cells) * var(--cell-length));
+            z-index: 20;
+            margin-top: 30px;
+            margin-left: 220px;
+        }
+
         /* Locks in input */
+        body:has(#lock-in:checked) #blocker {
+            margin-top: 10px;
+            margin-left: 330px;
+        }
         
         #lock-in:checked ~ #base #tape {
             width: 0px;
@@ -253,6 +228,24 @@
 
         html:has(#lock-in:checked) {
             min-width: calc(450px + 2 * var(--margin));
+        }
+
+        #updater {
+            position: absolute;
+            animation: tape-move-left;
+            animation-duration: calc(2 * var(--time-step));
+            animation-iteration-count: infinite;
+            animation-timing-function: steps(2, jump-end);
+            animation-play-state: paused;
+        }
+
+        @keyframes appear {
+            from {
+                visibility: hidden;
+            }
+            to {
+                visibility: inherit;
+            }
         }
 
         /* move's tape right */
@@ -313,15 +306,6 @@
             animation-play-state: running, paused, running;
         }
 
-        #updater {
-            position: absolute;
-            animation: tape-move-left;
-            animation-duration: calc(2 * var(--time-step));
-            animation-iteration-count: infinite;
-            animation-timing-function: steps(2, jump-end);
-            animation-play-state: paused;
-        }
-
         /* move's tape left */
         #left {
             animation-name: appear;
@@ -378,15 +362,11 @@
     </style>
     </head>
     <body>
-        <button id="left-1">left 1</button>
-        <button id="left-2">left 2</button>
-        <button id="right-1">right 1</button>
-        <button id="right-2">right 2</button>
-
         <input type="checkbox" id="lock-in">
         <div id="updater"> </div>
 
         <div id="base">
+            <div id="blocker"> </div>
             <div id="current-indicator"> </div>
             
             <div id="right">
