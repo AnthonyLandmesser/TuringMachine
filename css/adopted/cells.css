@@ -1,5 +1,17 @@
 :root {
   --num-cells: 3;
+
+  --animation-val-delays:
+    calc(var(--initial-cell-1) * -1s),
+    calc(var(--initial-cell-2) * -1s),
+    calc(var(--initial-cell-3) * -1s),
+  ;
+
+  --animation-no-write-delay: calc(mod(
+    var(--initial-cell-1) +
+    var(--initial-cell-2) +
+    var(--initial-cell-3) +
+  0, 2) * -1s);
   
   --cell-0: var(--zero);
   --cell-1: var(--zero);
@@ -52,7 +64,6 @@
     steps(2),
     steps(2),
   ;
-  
   
   --active-pos-0: 0;
   --active-pos-1: 0;

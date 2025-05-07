@@ -1,5 +1,5 @@
 :root {
-  --halt: -1;
+  --halt: 0;
 
   --off: 0;
   --on: 1;

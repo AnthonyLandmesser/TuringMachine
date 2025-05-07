@@ -1,0 +1,5 @@
+:root {
+    --initial-cell-1: var(--off);
+    --initial-cell-2: var(--on);
+    --initial-cell-3: var(--on);
+}
