@@ -1,0 +1,100 @@
+:root {
+  --num-cells: 3;
+  
+  --cell-0: var(--zero);
+  --cell-1: var(--zero);
+  --cell-2: var(--zero);
+  
+  --output-cell-0: "0";
+  --output-cell-1: "0";
+  --output-cell-2: "0";
+  
+  --output-cells:
+    var(--output-cell-0)
+    var(--output-cell-1)
+    var(--output-cell-2)
+  ;
+  
+  --val-cell-0: 0;
+  --val-cell-1: 0;
+  --val-cell-2: 0;
+  
+  --active-val: mod(calc(
+    var(--val-cell-0) +
+    var(--val-cell-1) +
+    var(--val-cell-2) +
+  var(--no-write)), 2);
+  
+  --selection-val-0: paused;
+  --selection-val-1: paused;
+  --selection-val-2: paused;
+  
+  --animation-val-play-states:
+    var(--selection-val-0),
+    var(--selection-val-1),
+    var(--selection-val-2),
+  ;
+  
+  --animation-val:
+    animation-val-0,
+    animation-val-1,
+    animation-val-2,
+  ;
+  
+  --animation-cell-duration:
+    2s,
+    2s,
+    2s,
+  ;
+  
+  --animation-cell-timing-function:
+    steps(2),
+    steps(2),
+    steps(2),
+  ;
+  
+  
+  --active-pos-0: 0;
+  --active-pos-1: 0;
+  --active-pos-2: 0;
+  
+  --active-pos: calc(
+    var(--active-pos-0) +
+    var(--active-pos-1) +
+    var(--active-pos-2) +
+  0);
+  
+  --selection-pos-0: paused;
+  --selection-pos-1: paused;
+  --selection-pos-2: paused;
+  
+  --animation-pos-play-states:
+    var(--selection-pos-0),
+    var(--selection-pos-1),
+    var(--selection-pos-2),
+  ;
+  
+  --animation-pos:
+    animation-pos-0,
+    animation-pos-1,
+    animation-pos-2,
+  ;
+}
+
+@keyframes animation-val-0 {to {--cell-0: var(--one); --val-cell-0: 1; --output-cell-0: "1"; --write-pos: 0;}}
+@keyframes animation-val-1 {to {--cell-1: var(--one); --val-cell-1: 1; --output-cell-1: "1"; --write-pos: 1;}}
+@keyframes animation-val-2 {to {--cell-2: var(--one); --val-cell-2: 1; --output-cell-2: "1"; --write-pos: 2;}}
+
+@container (width: 1px) and (height: 1px) {.child {--selection-val-0: running;}}
+@container (width: 2px) and (height: 1px) {.child {--selection-val-1: running;}}
+@container (width: 3px) and (height: 1px) {.child {--selection-val-2: running;}}
+
+@container (width: 0px) and (height: 1px) {.child {--no-write-play-state: running;}}
+
+@keyframes animation-pos-0 {to {--pos: 0; --cell-cur: var(--cell-0); --active-pos-0: 1;}}
+@keyframes animation-pos-1 {to {--pos: 1; --cell-cur: var(--cell-1); --active-pos-1: 1;}}
+@keyframes animation-pos-2 {to {--pos: 2; --cell-cur: var(--cell-2); --active-pos-2: 1;}}
+
+@container (width: 0px) and (height: 2px) {.child {--selection-pos-0: running;}}
+@container (width: 1px) and (height: 2px) {.child {--selection-pos-1: running;}}
+@container (width: 2px) and (height: 2px) {.child {--selection-pos-2: running;}}

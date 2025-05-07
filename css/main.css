@@ -1,0 +1,238 @@
+:root {
+  --halt: -1;
+
+  --off: 0;
+  --on: 1;
+
+  --left: 0;
+  --right: 1;
+
+  --zero: -;
+  --one: ;
+}
+
+#grand-parent {
+  width: fit-content;
+  height: fit-content;
+  animation-name: updater;
+  animation-duration: 2s;
+  animation-timing-function: steps(2);
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+  --container-1: normal;
+  --container-2: inline-size;
+}
+
+html:has(#run:checked) #grand-parent {
+  animation-play-state: running;
+}
+
+@property --container-1 {
+  syntax: "*";
+  inherits: true;
+  initial-value: normal;
+}
+
+@property --container-2 {
+  syntax: "*";
+  inherits: true;
+  initial-value: inline-size;
+}
+
+@keyframes updater {
+  to {
+    --container-1: inline-size;
+    --container-2: normal;
+  }
+}
+
+#parent-1 {
+  container-type: var(--container-1);
+}
+
+#parent-2 {
+  container-type: var(--container-2);
+}
+
+:root {
+  --no-write: 1;
+  --no-write-play-state: paused;
+  
+  --counter-play-state: paused;
+  
+  --message-unprocessed-1: 1;
+  --message-unprocessed-2: 1;
+  --message-unprocessed-3: 1;
+  --message-unprocessed-4: 1;
+  --animation-message-process-1: paused;
+  --animation-message-process-2: paused;
+  --animation-message-process-3: paused;
+  --animation-message-process-4: paused;
+  
+  --more-animations: var(--animation-val) no-write, var(--animation-pos) var(--animation-state) message-process-1, message-process-2, message-process-3, message-process-4,;
+  --more-durations: var(--animation-cell-duration) 2s, var(--animation-cell-duration) var(--animation-cell-duration) 2s, 3s, 3s, 3s, 3s,;
+  --more-timing-functions: var(--animation-timing-function) steps(2), var(--animation-cell-timing-function) var(--animation-cell-timing-function) steps(2), linear, linear, linear, linear,;
+  --more-play-states: var(--animation-val-play-states) var(--no-write-play-state), var(--animation-pos-play-states) var(--animation-state-play-state) var(--animation-message-process-1), var(--animation-message-process-2), var(--animation-message-process-3), var(--animation-message-process-4),;
+}
+
+#child-1 {
+  animation-name: var(--more-animations) counter-1;
+  animation-duration: var(--more-durations) 10s;
+  animation-timing-function: var(--more-timing-functions) steps(10);
+  animation-iteration-count: infinite;
+  animation-play-state: var(--more-play-states) var(--counter-play-state);
+}
+
+@keyframes no-write {
+  to {
+    --no-write: 0;
+  }
+}
+
+@keyframes counter-1 {
+  0% {
+    /*message reset values*/
+    height: calc(var(--message-unprocessed-1) * 4px);
+    width: 1px;
+  }
+  10% {
+    /*message write*/
+    height: calc(var(--message-unprocessed-2) * 1px);
+    width: calc(var(--write) * (var(--pos) + 1) * 1px);
+  }
+  20% {
+    /*message move*/
+    height: calc(var(--message-unprocessed-3) * 2px);
+    width: calc((var(--pos) + var(--dir)) * 1px);
+  }
+  30% {
+    /*message change state*/
+    height: calc(var(--message-unprocessed-4) * 3px);
+    width: calc(var(--next-state) * 1px);
+  }
+  40% {
+    /*reset values*/
+    height: 5px;
+    width: calc((var(--active-val) * -1 + 1) * 1px);
+  }
+  50% {
+    /*write*/
+    height: 5px;
+    width: calc(var(--active-val) * 1px);
+  }
+  60% {
+    /*move*/
+    height: 5px;
+    width: calc(var(--active-pos) * 1px);
+  }
+  70% {
+    /*change state*/
+    height: 5px;
+    width: calc(var(--active-state) * 1px);
+  }
+}
+
+@keyframes message-process {
+  to {
+    --message-unprocessed: 0;
+  }
+}
+
+/*receives reset of child 1*/
+@container (width: 1px) and (height: 4px) {
+  .child {
+    --no-write-play-state: running;
+    --more-animations: var(--animation-val) no-write,;
+    --more-durations: var(--animation-cell-duration) 2s,;
+    --more-timing-functions: var(--animation-timing-function) steps(2),;
+    --more-play-states: var(--animation-val-play-states) var(--no-write-play-state),;
+  }
+}
+
+/*receives reset of child 2*/
+@container (width: 2px) and (height: 4px) {
+  .child {
+    --more-animations: ;
+    --more-durations: ;
+    --more-timing-functions: ;
+    --more-play-states: ;
+  }
+}
+
+@container (height: 0px) {
+  .child {
+    --counter-play-state: running;
+  }
+}
+
+@container (width: 1) and (height: 5px) {
+  .child {
+    --animation-message-process: running;
+    --counter-play-state: running;
+  }
+}
+
+#child-2 {
+  /* need to reset val animations */
+  animation-name: var(--animation-val) no-write, var(--more-animations) counter-2;
+  animation-duration: var(--animation-cell-duration) 2s, var(--more-durations) 10s;
+  animation-timing-function: var(--animation-timing-function) steps(2), var(--more-timing-functions) steps(10);
+  animation-iteration-count: infinite;
+  animation-play-state: var(--animation-val-play-states) var(--no-write-play-state), var(--more-play-states) var(--counter-play-state);
+}
+
+@keyframes counter-2 {
+  0% {
+    /*reset values*/
+    height: 5px;
+    width: calc((var(--active-val) * -1 + 1) * 1px);
+  }
+  10% {
+    /*write*/
+    height: 5px;
+    width: calc(var(--active-val) * 1px);
+  }
+  20% {
+    /*move*/
+    height: 5px;
+    width: calc(var(--active-pos) * 1px);
+  }
+  30% {
+    /*change state*/
+    height: 5px;
+    width: calc(var(--active-state) * 1px);
+  }
+  40% {
+    /*message reset values*/
+    height: calc(var(--message-unprocessed-1) * 4px);
+    width: 2px;
+  }
+  50% {
+    /*message write*/
+    height: calc(var(--message-unprocessed-2) * 1px);
+    width: calc((var(--no-write) * -1 + 1) * (var(--write-pos) + 1) * 1px);
+  }
+  60% {
+    /*message move*/
+    height: calc(var(--message-unprocessed-3) * 2px);
+    width: calc(var(--pos) * 1px);
+  }
+  70% {
+    /*message change state*/
+    height: calc(var(--message-unprocessed-4) * 3px);
+    width: calc(var(--state-cur) * 1px);
+  }
+}
+
+@container (height: 0px) {
+  #child-1 {
+    --more-animations: ;
+    --more-play-states: ;
+    --counter-play-state: running;
+  }
+  #child-2 {
+    --more-animations: ;
+    --more-play-states: ;
+    --counter-play-state: running;
+  }
+}
