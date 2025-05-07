@@ -9,11 +9,7 @@
 
   --zero: -;
   --one: ;
-}
 
-#grand-parent {
-  width: fit-content;
-  height: fit-content;
   animation-name: updater;
   animation-duration: 2s;
   animation-timing-function: steps(2);
@@ -23,27 +19,20 @@
   --container-2: inline-size;
 }
 
-html:has(#run:checked) #grand-parent {
-  animation-play-state: running;
-}
-
-@property --container-1 {
-  syntax: "*";
-  inherits: true;
-  initial-value: normal;
-}
-
-@property --container-2 {
-  syntax: "*";
-  inherits: true;
-  initial-value: inline-size;
-}
-
 @keyframes updater {
   to {
     --container-1: inline-size;
     --container-2: normal;
   }
+}
+
+:root:has(#run:checked) {
+  animation-play-state: running;
+}
+
+#grand-parent {
+  width: fit-content;
+  height: fit-content;
 }
 
 #parent-1 {

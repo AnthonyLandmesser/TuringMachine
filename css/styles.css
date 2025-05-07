@@ -28,9 +28,9 @@
 #run {
   position: relative;
   top: 125px;
-  &::after {
-    position: relative;
-    left: 20px;
-    content: "run";
-  }
+}
+
+label {
+  position: relative;
+  top: 125px;
 }
