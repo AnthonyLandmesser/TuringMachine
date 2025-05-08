@@ -7,9 +7,9 @@
   }
 }
 
-@property --val-cell-cur{
+@property --val-cell-cur {
   syntax: "<string>";
-  inherits: true;
+  inherits: false;
   initial-value: "0";
 }
 
@@ -26,11 +26,12 @@
 }
 
 #run {
-  position: relative;
-  top: 125px;
+  position: absolute;
+  margin-top: 125px;
 }
 
 label {
-  position: relative;
-  top: 125px;
+  position: absolute;
+  margin-top: 123px;
+  margin-left: 25px;
 }

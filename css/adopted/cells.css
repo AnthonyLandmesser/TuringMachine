@@ -21,12 +21,6 @@
   --output-cell-1: "0";
   --output-cell-2: "0";
   
-  --output-cells:
-    var(--output-cell-0)
-    var(--output-cell-1)
-    var(--output-cell-2)
-  ;
-  
   --val-cell-0: 0;
   --val-cell-1: 0;
   --val-cell-2: 0;
@@ -89,6 +83,14 @@
     animation-pos-0,
     animation-pos-1,
     animation-pos-2,
+  ;
+}
+
+.child {
+  --output-cells:
+    var(--output-cell-0)
+    var(--output-cell-1)
+    var(--output-cell-2)
   ;
 }
 

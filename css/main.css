@@ -45,7 +45,6 @@
 
 :root {
   --no-write: 1;
-  --no-write-play-state: paused;
   
   --counter-play-state: paused;
   
@@ -58,14 +57,16 @@
   --animation-message-process-3: paused;
   --animation-message-process-4: paused;
   
-  --more-animations: var(--animation-val) no-write, var(--animation-pos) var(--animation-state) message-process-1, message-process-2, message-process-3, message-process-4,;
+  --more-animations: var(--animation-val) no-write, var(--animation-pos) var(--animation-states) message-process-1, message-process-2, message-process-3, message-process-4,;
   --more-durations: var(--animation-cell-duration) 2s, var(--animation-cell-duration) var(--animation-cell-duration) 2s, 3s, 3s, 3s, 3s,;
-  --more-timing-functions: var(--animation-timing-function) steps(2), var(--animation-cell-timing-function) var(--animation-cell-timing-function) steps(2), linear, linear, linear, linear,;
-  --more-play-states: var(--animation-val-play-states) var(--no-write-play-state), var(--animation-pos-play-states) var(--animation-state-play-state) var(--animation-message-process-1), var(--animation-message-process-2), var(--animation-message-process-3), var(--animation-message-process-4),;
+  --more-timing-functions: var(--animation-cell-timing-function) steps(2), var(--animation-cell-timing-function) var(--animation-cell-timing-function) steps(2), linear, linear, linear, linear,;
+  --more-play-states: var(--animation-val-play-states) paused, var(--animation-pos-play-states) var(--animation-state-play-state) var(--animation-message-process-1), var(--animation-message-process-2), var(--animation-message-process-3), var(--animation-message-process-4),;
 }
 
 #child-1 {
+  --true-output-cells: var(--output-cells);
   animation-name: var(--more-animations) counter-1;
+  animation-delay: var(--animation-val-delays) var(--animation-no-write-delay);
   animation-duration: var(--more-durations) 10s;
   animation-timing-function: var(--more-timing-functions) steps(10);
   animation-iteration-count: infinite;
@@ -130,11 +131,10 @@
 /*receives reset of child 1*/
 @container (width: 1px) and (height: 4px) {
   .child {
-    --no-write-play-state: running;
     --more-animations: var(--animation-val) no-write,;
     --more-durations: var(--animation-cell-duration) 2s,;
     --more-timing-functions: var(--animation-timing-function) steps(2),;
-    --more-play-states: var(--animation-val-play-states) var(--no-write-play-state),;
+    --more-play-states: var(--animation-val-play-states) running,;
   }
 }
 
