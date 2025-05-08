@@ -34,6 +34,12 @@
     animation-state-1,
     animation-state-2,
   ;
+
+  --animation-state-delay:
+    0s,
+    0s,
+    0s,
+  ;
   
   --animation-state-duration:
     2s,
