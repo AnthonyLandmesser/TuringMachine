@@ -1,5 +1,5 @@
 :root {
-  --halt: 0;
+  --halt: -1;
 
   --off: 0;
   --on: 1;
@@ -11,122 +11,57 @@
   --one: ;
 
   animation-name: operation-cycle;
-  animation-duration: 20s;
-  animation-timing-function: steps(20);
+  animation-duration: 8s;
+  animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-play-state: paused;
   --container-1: normal;
   --container-2: size;
-  --height: 0px;
+  --opcode: 0px;
 }
 
 @keyframes operation-cycle {
   0% {
     --container-1: normal;
     --container-2: size;
-    --height: 0px;
+    --opcode: 0px;
   }
-  5% {
-    --container-1: size;
-    --container-2: normal;
-  }
-  10% {
+  12.5% {
     --container-1: normal;
     --container-2: size;
-    --height: 1px;
-  }
-  15% {
-    --container-1: size;
-    --container-2: normal;
-  }
-  20% {
-    --container-1: normal;
-    --container-2: size;
-    --height: 2px;
+    --opcode: 1px;
   }
   25% {
-    --container-1: size;
-    --container-2: normal;
-  }
-  30% {
     --container-1: normal;
     --container-2: size;
-    --height: 3px;
+    --opcode: 2px;
   }
-  35% {
+  37.5% {
     --container-1: size;
     --container-2: normal;
-  }
-  40% {
-    --container-1: normal;
-    --container-2: size;
-    --height: 4px;
-  }
-  45% {
-    --container-1: size;
-    --container-2: normal;
+    --opcode: 3px;
   }
   50% {
-    --container-1: normal;
-    --container-2: size;
-    --height: 5px;
-  }
-  55% {
     --container-1: size;
     --container-2: normal;
+    --opcode: 4px;
   }
-  60% {
-    --container-1: normal;
-    --container-2: size;
-    --height: 6px;
-  }
-  65% {
+  62.5% {
     --container-1: size;
     --container-2: normal;
-  }
-  70% {
-    --container-1: normal;
-    --container-2: size;
-    --height: 7px;
+    --opcode: 5px;
   }
   75% {
     --container-1: size;
     --container-2: normal;
+    --opcode: 6px;
   }
-  80% {
+  87.5% {
     --container-1: normal;
     --container-2: size;
-    --height: 8px;
-  }
-  85% {
-    --container-1: size;
-    --container-2: normal;
-  }
-  90% {
-    --container-1: normal;
-    --container-2: size;
-    --height: 9px;
-  }
-  95% {
-    --container-1: size;
-    --container-2: normal;
+    --opcode: 7px;
   }
 }
-
-/* @property --height {
-  syntax: "*";
-  inherits: true;
-}
-
-@property --container-1 {
-  syntax: "*";
-  inherits: true;
-}
-
-@property --container-2 {
-  syntax: "*";
-  inherits: true;
-} */
 
 :root:has(#run:checked) {
   animation-play-state: running;
@@ -137,239 +72,58 @@
 }
 
 #parent-1 {
-  height: var(--height);
+  height: var(--opcode);
   container-type: var(--container-1);
 }
 
 #parent-2 {
-  height: var(--height);
+  height: var(--opcode);
   container-type: var(--container-2);
 }
 
 :root {
-  --test: 0;
-  --no-write: 1;
-  
-  --counter-play-state: paused;
-  
-  --animation-message-process-1: paused;
-  --animation-message-process-2: paused;
-  --animation-message-process-3: paused;
-  --animation-message-process-4: paused;
-  
-  --more-animations: var(--animation-val) no-write, var(--animation-pos) var(--animation-states) message-process-1, message-process-2, message-process-3, message-process-4,;
-  --more-durations: var(--animation-cell-duration) 2s, var(--animation-cell-duration) var(--animation-state-duration) 3s, 3s, 3s, 3s,;
-  --more-timing-functions: var(--animation-cell-timing-function) steps(2), var(--animation-state-timing-function) var(--animation-cell-timing-function) steps(3), steps(3), steps(3), steps(3),;
-  --more-play-states: var(--animation-val-play-states) paused, var(--animation-pos-play-states) var(--animation-state-play-state) var(--animation-message-process-1), var(--animation-message-process-2), var(--animation-message-process-3), var(--animation-message-process-4),;
-}
-
-@property --message-unprocessed-1 {
-  syntax: "<integer>";
-  inherits: true;
-  initial-value: 1;
-}
-
-@property --message-unprocessed-2 {
-  syntax: "<integer>";
-  inherits: true;
-  initial-value: 1;
-}
-
-@property --message-unprocessed-3 {
-  syntax: "<integer>";
-  inherits: true;
-  initial-value: 1;
-}
-
-@property --message-unprocessed-4 {
-  syntax: "<integer>";
-  inherits: true;
-  initial-value: 1;
+  --more-animations: var(--animation-val) var(--animation-pos) var(--animation-states);
+  --more-play-states: var(--animation-val-play-states) var(--animation-pos-play-states) var(--animation-state-play-state);
 }
 
 #child-1 {
-  --true-output-cells: var(--output-cells);
-  animation-name: var(--more-animations) counter-1;
-  animation-delay: var(--animation-val-delays) var(--animation-no-write-delay), var(--animation-cell-delay) var(--animation-state-delay) 0s, 0s, 0s, 0s, 0s;
-  animation-duration: var(--more-durations) 10s;
-  animation-timing-function: var(--more-timing-functions) steps(10, end);
+  animation-name: var(--more-animations);
+  animation-delay: var(--animation-val-delays) var(--animation-cell-delay) var(--animation-state-delay);
+  animation-duration: 3s;
+  animation-timing-function: linear;
   animation-iteration-count: infinite;
-  animation-play-state: var(--more-play-states) var(--counter-play-state);
+  animation-play-state: var(--more-play-states);
+
+  --action-msg: calc(mod(clamp(0, var(--opcode) + 1, 2), 2) * var(--action));
+  --pos-msg: calc(mod(clamp(0, var(--opcode) + 0, 2), 2) * var(--pos));
+  --state-msg: calc(mod(clamp(0, var(--opcode) - 1, 2), 2) * var(--next-state));
+  width: calc((var(--action-msg) + var(--pos-msg) + var(--state-msg)) * 1px);
 }
 
-@keyframes no-write {
-  to {
-    --no-write: 0;
-  }
-}
+#child-2 {
+  animation-name: var(--more-animations);
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: var(--more-play-states);
 
-@keyframes counter-1 {
-  0% {
-    /*message reset values*/
-    height: calc(var(--message-unprocessed-1) * 4px);
-    width: 1px;
-    --test: 1;
-  }
-  10% {
-    /*message write*/
-    height: calc(var(--message-unprocessed-2) * 1px);
-    width: calc(var(--write) * (var(--pos) + 1) * 1px);
-    --test: 2;
-  }
-  20% {
-    /*message move*/
-    height: calc(var(--message-unprocessed-3) * 2px);
-    width: calc((var(--pos) + var(--dir)) * 1px);
-    --test: 3;
-  }
-  30% {
-    /*message change state*/
-    height: calc(var(--message-unprocessed-4) * 3px);
-    width: calc(var(--next-state) * 1px);
-  }
-  40% {
-    /*reset values*/
-    height: 5px;
-    width: calc((var(--active-val) * -1 + 1) * 1px);
-  }
-  50% {
-    /*write*/
-    height: 5px;
-    width: calc(var(--active-val) * 1px);
-  }
-  60% {
-    /*move*/
-    height: 5px;
-    width: calc(var(--active-pos) * 1px);
-  }
-  70% {
-    /*change state*/
-    height: 5px;
-    width: calc(var(--active-state) * 1px);
-  }
-}
-
-@keyframes message-process-1 {
-  from {
-    --message-unprocessed-1: 1;
-  }
-  to {
-    --message-unprocessed-1: 0;
-  }
-}
-
-@keyframes message-process-2 {
-  to {
-    --message-unprocessed-2: 0;
-  }
-}
-
-@keyframes message-process-3 {
-  to {
-    --message-unprocessed-3: 0;
-  }
-}
-
-@keyframes message-process-4 {
-  to {
-    --message-unprocessed-4: 0;
-  }
+  --reset-msg: calc(mod(clamp(0, var(--opcode) - 2, 2), 2) * var(--pos));
+  --pos-msg: calc(mod(clamp(0, var(--opcode) - 3, 2), 2) * var(--write) * var(--pos));
+  --state-msg: calc(mod(clamp(0, var(--opcode) - 4, 2), 2) * (var(--dir) + var(--pos)));
+  --state-msg: calc(mod(clamp(0, var(--opcode) - 5, 2), 2) * var(--state-cur));
+  width: calc((var(--reset-msg) + var(--write-msg) + var(--pos-msg) + var(--state-msg)) * 1px);
 }
 
 /*receives reset of child 1*/
-@container (width: 1px) and (height: 4px) {
+@container (height: 3px) {
   .child {
-    --more-animations: var(--animation-val) no-write,;
-    --more-durations: var(--animation-cell-duration) 2s,;
-    --more-timing-functions: var(--animation-timing-function) steps(2),;
-    --more-play-states: var(--animation-val-play-states) running,;
+    --more-animations: var(--animation-val);
   }
 }
 
 /*receives reset of child 2*/
-@container (width: 2px) and (height: 4px) {
+@container (height: 7px) {
   .child {
     --more-animations: ;
-    --more-durations: ;
-    --more-timing-functions: ;
-    --more-play-states: ;
-  }
-}
-
-@container (height: 0px) {
-  .child {
-    --counter-play-state: running;
-  }
-}
-
-@container (width: 1) and (height: 5px) {
-  .child {
-    --animation-message-process: running;
-    --counter-play-state: running;
-  }
-}
-
-#child-2 {
-  /* need to reset val animations */
-  animation-name: var(--animation-val) no-write, var(--more-animations) counter-2;
-  animation-duration: var(--animation-cell-duration) 2s, var(--more-durations) 10s;
-  animation-timing-function: var(--animation-timing-function) steps(2), var(--more-timing-functions) steps(10);
-  animation-iteration-count: infinite;
-  animation-play-state: var(--animation-val-play-states) var(--no-write-play-state), var(--more-play-states) var(--counter-play-state);
-}
-
-@keyframes counter-2 {
-  0% {
-    /*reset values*/
-    height: 5px;
-    width: calc((var(--active-val) * -1 + 1) * 1px);
-  }
-  10% {
-    /*write*/
-    height: 5px;
-    width: calc(var(--active-val) * 1px);
-  }
-  20% {
-    /*move*/
-    height: 5px;
-    width: calc(var(--active-pos) * 1px);
-  }
-  30% {
-    /*change state*/
-    height: 5px;
-    width: calc(var(--active-state) * 1px);
-  }
-  40% {
-    /*message reset values*/
-    height: calc(var(--message-unprocessed-1) * 4px);
-    width: 2px;
-  }
-  50% {
-    /*message write*/
-    height: calc(var(--message-unprocessed-2) * 1px);
-    width: calc((var(--no-write) * -1 + 1) * (var(--write-pos) + 1) * 1px);
-  }
-  60% {
-    /*message move*/
-    height: calc(var(--message-unprocessed-3) * 2px);
-    width: calc(var(--pos) * 1px);
-  }
-  70% {
-    /*message change state*/
-    height: calc(var(--message-unprocessed-4) * 3px);
-    width: calc(var(--state-cur) * 1px);
-  }
-}
-
-@container (height: 0px) {
-  #child-1 {
-    --more-animations: ;
-    --more-play-states: ;
-    --counter-play-state: running;
-  }
-  #child-2 {
-    --more-animations: ;
-    --more-play-states: ;
-    --counter-play-state: running;
   }
 }
