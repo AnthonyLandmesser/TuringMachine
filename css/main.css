@@ -1,14 +1,11 @@
 :root {
-  --halt: -1;
+  --halt: 0;
 
   --off: 0;
   --on: 1;
 
   --left: 0;
   --right: 1;
-
-  --zero: -;
-  --one: ;
 
   animation-name: operation-cycle;
   animation-duration: 8s;
@@ -81,49 +78,112 @@
   container-type: var(--container-2);
 }
 
-:root {
-  --more-animations: var(--animation-val) var(--animation-pos) var(--animation-states);
-  --more-play-states: var(--animation-val-play-states) var(--animation-pos-play-states) var(--animation-state-play-state);
-}
-
 #child-1 {
-  animation-name: var(--more-animations);
+  animation-name: var(--animation-val) var(--animation-pos) var(--animation-states);
   animation-delay: var(--animation-val-delays) var(--animation-cell-delay) var(--animation-state-delay);
   animation-duration: 3s;
   animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-play-state: var(--more-play-states);
+  animation-play-state: var(--animation-val-play-states) var(--animation-pos-play-states) var(--animation-state-play-state);
 
-  --action-msg: calc(mod(clamp(0, var(--opcode) + 1, 2), 2) * var(--action));
+  --actions-msg: calc(mod(clamp(0, var(--opcode) + 1, 2), 2) * var(--info-next));
   --pos-msg: calc(mod(clamp(0, var(--opcode) + 0, 2), 2) * var(--pos));
   --state-msg: calc(mod(clamp(0, var(--opcode) - 1, 2), 2) * var(--next-state));
   width: calc((var(--action-msg) + var(--pos-msg) + var(--state-msg)) * 1px);
 }
 
+/*receives reset of child 1*/
+@container (height: 3px) {
+  #child-1 {
+    animation-name: var(--animation-val);
+  }
+}
+
 #child-2 {
-  animation-name: var(--more-animations);
+  --animation-actions: animation-action-0, animation-action-1, animation-action-2, animation-action-3, halt;
+  --animation-actions-play-states: paused, paused, paused, paused, paused;
+  animation-name: var(--animation-actions) var(--animation-pos) var(--animation-states);
   animation-duration: 3s;
   animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-play-state: var(--more-play-states);
+  animation-play-state: var(--animation-actions-play-states) var(--animation-pos-play-states) var(--animation-state-play-state);
 
-  --reset-msg: calc(mod(clamp(0, var(--opcode) - 2, 2), 2) * var(--pos));
+  --go: 1;
+  --reset-msg: calc(mod(clamp(0, var(--opcode) - 2, 2), 2) * var(--go) * var(--pos));
   --pos-msg: calc(mod(clamp(0, var(--opcode) - 3, 2), 2) * var(--write) * var(--pos));
   --state-msg: calc(mod(clamp(0, var(--opcode) - 4, 2), 2) * (var(--dir) + var(--pos)));
   --state-msg: calc(mod(clamp(0, var(--opcode) - 5, 2), 2) * var(--state-cur));
   width: calc((var(--reset-msg) + var(--write-msg) + var(--pos-msg) + var(--state-msg)) * 1px);
 }
 
-/*receives reset of child 1*/
-@container (height: 3px) {
-  .child {
-    --more-animations: var(--animation-val);
+/* save actions */
+@container (width: 0px) and (height: 0px) {
+  #child-2 {
+    --animation-actions-play-states: running, paused, paused, paused, paused;
+  }
+}
+
+@keyframes animation-action-0 {
+  10% {
+    --dir: -1;
+    --write: 0;
+  }
+}
+
+@container (width: 1px) and (height: 0px) {
+  #child-2 {
+    --animation-actions-play-states: paused, running, paused, paused, paused;
+  }
+}
+
+@keyframes animation-action-1 {
+  10% {
+    --dir: -1;
+    --write: 1;
+  }
+}
+
+@container (width: 2px) and (height: 0px) {
+  #child-2 {
+    --animation-actions-play-states: paused, paused, running, paused, paused;
+  }
+}
+
+@keyframes animation-action-2 {
+  10% {
+    --dir: 1;
+    --write: 0;
+  }
+}
+
+@container (width: 3px) and (height: 0px) {
+  #child-2 {
+    --animation-actions-play-states: paused, paused, paused, running, paused;
+  }
+}
+
+@keyframes animation-action-3 {
+  10% {
+    --dir: 1;
+    --write: 1;
+  }
+}
+
+@container (width: 4px) and (height: 0px) {
+  #child-2 {
+    --animation-actions-play-states: paused, paused, paused, paused, running;
+  }
+}
+
+@keyframes halt {
+  10% {
+    --dir: 0;
+    --write: 0;
+    --go: 0;
   }
 }
 
 /*receives reset of child 2*/
 @container (height: 7px) {
-  .child {
-    --more-animations: ;
+  #child-2 {
+    animation-name: initial;
   }
 }
