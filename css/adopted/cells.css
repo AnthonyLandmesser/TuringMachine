@@ -1,10 +1,4 @@
 :root {
-  --animation-val-delays:
-    calc(var(--initial-cell-1) * -1s), 0s,
-    calc(var(--initial-cell-2) * -1s), 0s,
-    calc(var(--initial-cell-3) * -1s), 0s,
-  ;
-
   --animation-val-1: animation-initial-val-1, animation-val-1;
   --animation-val-2: animation-initial-val-2, animation-val-2;
   --animation-val-3: animation-initial-val-3, animation-val-3;
@@ -13,15 +7,13 @@
   --selection-val-2: paused;
   --selection-val-3: paused;
   
-  --cell-1: 0;
-  --cell-2: 0;
-  --cell-3: 0;
+  --initial-cell-real-1: 0;
+  --initial-cell-real-2: 0;
+  --initial-cell-real-3: 0;
 
-  --animation-cell-delay:
-    0s,
-    0s,
-    0s,
-  ;
+  --default-cell-1: 0;
+  --default-cell-2: 0;
+  --default-cell-3: 0;
 
   --animation-pos:
     animation-pos-1,
@@ -32,6 +24,21 @@
   --selection-pos-1: paused;
   --selection-pos-2: paused;
   --selection-pos-3: paused;
+}
+
+@property --output-cells {
+  syntax: "*";
+  inherits: true;
+}
+
+@property --pos {
+  syntax: "*";
+  inherits: true;
+}
+
+@property --cell-cur {
+  syntax: "*";
+  inherits: true;
 }
 
 .child {
@@ -49,18 +56,20 @@
     paused, var(--selection-val-3),
   ;
 
-  --cell-1: var(--initial-cell-1) + var(--default-cell-1);
-  --cell-2: var(--initial-cell-2) + var(--default-cell-2);
-  --cell-3: var(--initial-cell-3) + var(--default-cell-3);
+  --cell-1: calc(var(--initial-cell-1) + var(--default-cell-1));
+  --cell-2: calc(var(--initial-cell-2) + var(--default-cell-2));
+  --cell-3: calc(var(--initial-cell-3) + var(--default-cell-3));
 
-  counter-reset: output-cell-1 var(--cell-1);
-  counter-reset: output-cell-2 var(--cell-2);
-  counter-reset: output-cell-3 var(--cell-3);
+  counter-reset:
+    output-cell-1 var(--cell-1)
+    output-cell-2 var(--cell-2)
+    output-cell-3 var(--cell-3)
+  ;
 
   --output-cells:
-    var(counter(output-cell-1))
-    var(counter(output-cell-2))
-    var(counter(output-cell-3))
+    counter(output-cell-1)
+    counter(output-cell-2)
+    counter(output-cell-3)
   ;
 
   --animation-pos-play-states:
@@ -70,9 +79,9 @@
   ;
 }
 
-@keyframes animation-initial-val-1 {10% {--initial-cell-1: 1;}}
-@keyframes animation-initial-val-2 {10% {--initial-cell-2: 1;}}
-@keyframes animation-initial-val-3 {10% {--initial-cell-3: 1;}}
+@keyframes animation-initial-val-1 {10% {--initial-cell-real-1: var(--initial-cell-1);}}
+@keyframes animation-initial-val-2 {10% {--initial-cell-real-2: var(--initial-cell-2);}}
+@keyframes animation-initial-val-3 {10% {--initial-cell-real-3: var(--initial-cell-3);}}
 
 @keyframes animation-val-1 {10% {--default-cell-1: 1;}}
 @keyframes animation-val-2 {10% {--default-cell-2: 1;}}

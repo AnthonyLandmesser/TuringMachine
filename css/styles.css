@@ -7,21 +7,14 @@
   }
 }
 
-@property --val-cell-cur {
-  syntax: "<string>";
-  inherits: false;
-  initial-value: "0";
-}
-
 #info {
   position: absolute;
   margin-top: 60px;
   background-color: blue;
   font-size: 50px;
   &::after {
-    --val-cell-cur: var(--cell-cur) "1";
-    counter-reset: p var(--pos);
-    content: var(--val-cell-cur) counter(p);
+    counter-reset: p var(--cell-cur) q var(--pos);
+    content: "cur: " counter(p) ", pos:" counter(q);
   }
 }
 

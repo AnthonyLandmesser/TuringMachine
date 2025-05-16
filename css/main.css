@@ -7,6 +7,13 @@
   --left: 0;
   --right: 1;
 
+  /* initial pos */
+  --pos: 1;
+  --cell-cur: 0;
+  --state-cur: 1;
+  --state-next: var(--not-cell-cur) * var(--off-state-next-1) + var(--cell-cur) * var(--on-state-next-1);
+  --info-next: var(--not-cell-cur) * var(--off-info-next-1) + var(--cell-cur) * var(--on-info-next-1);
+
   animation-name: operation-cycle;
   animation-duration: 8s;
   animation-timing-function: linear;
@@ -79,11 +86,10 @@
 }
 
 #child-1 {
-  animation-name: var(--animation-val) var(--animation-pos) var(--animation-states);
-  animation-delay: var(--animation-val-delays) var(--animation-cell-delay) var(--animation-state-delay);
+  animation-name: var(--animation-val) var(--animation-pos) var(--animation-states) end;
   animation-duration: 3s;
   animation-timing-function: linear;
-  animation-play-state: var(--animation-val-play-states) var(--animation-pos-play-states) var(--animation-state-play-state);
+  animation-play-state: var(--animation-val-play-states) var(--animation-pos-play-states) var(--animation-state-play-state) paused;
 
   --actions-msg: calc(mod(clamp(0, var(--opcode) + 1, 2), 2) * var(--info-next));
   --pos-msg: calc(mod(clamp(0, var(--opcode) + 0, 2), 2) * var(--pos));
@@ -100,13 +106,14 @@
 
 #child-2 {
   --animation-actions: animation-action-0, animation-action-1, animation-action-2, animation-action-3, halt;
-  --animation-actions-play-states: paused, paused, paused, paused, paused;
-  animation-name: var(--animation-actions) var(--animation-pos) var(--animation-states);
+  --animation-actions-play-states: paused, paused, paused, paused, paused,;
+  animation-name: var(--animation-actions) var(--animation-pos) var(--animation-states) end;
   animation-duration: 3s;
   animation-timing-function: linear;
-  animation-play-state: var(--animation-actions-play-states) var(--animation-pos-play-states) var(--animation-state-play-state);
+  animation-play-state: var(--animation-actions-play-states) var(--animation-pos-play-states) var(--animation-state-play-state) paused;
 
   --go: 1;
+  --dir: 1;
   --reset-msg: calc(mod(clamp(0, var(--opcode) - 2, 2), 2) * var(--go) * var(--pos));
   --pos-msg: calc(mod(clamp(0, var(--opcode) - 3, 2), 2) * var(--write) * var(--pos));
   --state-msg: calc(mod(clamp(0, var(--opcode) - 4, 2), 2) * (var(--dir) + var(--pos)));
@@ -114,10 +121,15 @@
   width: calc((var(--reset-msg) + var(--write-msg) + var(--pos-msg) + var(--state-msg)) * 1px);
 }
 
+@property --dir {
+  syntax: "*";
+  inherits: true;
+}
+
 /* save actions */
 @container (width: 0px) and (height: 0px) {
   #child-2 {
-    --animation-actions-play-states: running, paused, paused, paused, paused;
+    --animation-actions-play-states: running, paused, paused, paused, paused,;
   }
 }
 
@@ -130,7 +142,7 @@
 
 @container (width: 1px) and (height: 0px) {
   #child-2 {
-    --animation-actions-play-states: paused, running, paused, paused, paused;
+    --animation-actions-play-states: paused, running, paused, paused, paused,;
   }
 }
 
@@ -143,7 +155,7 @@
 
 @container (width: 2px) and (height: 0px) {
   #child-2 {
-    --animation-actions-play-states: paused, paused, running, paused, paused;
+    --animation-actions-play-states: paused, paused, running, paused, paused,;
   }
 }
 
@@ -156,7 +168,7 @@
 
 @container (width: 3px) and (height: 0px) {
   #child-2 {
-    --animation-actions-play-states: paused, paused, paused, running, paused;
+    --animation-actions-play-states: paused, paused, paused, running, paused,;
   }
 }
 
@@ -169,7 +181,7 @@
 
 @container (width: 4px) and (height: 0px) {
   #child-2 {
-    --animation-actions-play-states: paused, paused, paused, paused, running;
+    --animation-actions-play-states: paused, paused, paused, paused, running,;
   }
 }
 

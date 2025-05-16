@@ -17,16 +17,10 @@
     animation-state-2,
     animation-state-3,
   ;
-
-  --animation-state-delay: 0s,
-    0s,
-    0s,
-    0s,
-  ;
 }
 
 .child {
-  --animation-state-play-state: var(--selection-state-halt)
+  --animation-state-play-state: var(--selection-state-halt),
     var(--selection-state-1),
     var(--selection-state-2),
     var(--selection-state-3),
