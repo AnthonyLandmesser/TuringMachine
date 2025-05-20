@@ -1,4 +1,6 @@
 :root {
+  --num-cells: 3;
+
   --animation-val-1: animation-initial-val-1, animation-val-1;
   --animation-val-2: animation-initial-val-2, animation-val-2;
   --animation-val-3: animation-initial-val-3, animation-val-3;
@@ -6,10 +8,12 @@
   --selection-val-1: paused;
   --selection-val-2: paused;
   --selection-val-3: paused;
+
+  --setup-play: paused;
   
-  --initial-cell-real-1: 0;
-  --initial-cell-real-2: 0;
-  --initial-cell-real-3: 0;
+  --activate-initial-1: 0;
+  --activate-initial-2: 0;
+  --activate-initial-3: 0;
 
   --default-cell-1: 0;
   --default-cell-2: 0;
@@ -36,14 +40,12 @@
   inherits: true;
 }
 
-@property --cell-cur {
+@property --cell-cur-total {
   syntax: "*";
   inherits: true;
 }
 
 .child {
-  --not-cell-cur: calc(var(--cell-cur) * -1 + 1);
-
   --animation-val:
     var(--animation-val-1),
     var(--animation-val-2),
@@ -51,14 +53,14 @@
   ;
 
   --animation-val-play-states:
-    paused, var(--selection-val-1),
-    paused, var(--selection-val-2),
-    paused, var(--selection-val-3),
+    var(--setup-play), var(--selection-val-1),
+    var(--setup-play), var(--selection-val-2),
+    var(--setup-play), var(--selection-val-3),
   ;
 
-  --cell-1: calc(var(--initial-cell-1) + var(--default-cell-1));
-  --cell-2: calc(var(--initial-cell-2) + var(--default-cell-2));
-  --cell-3: calc(var(--initial-cell-3) + var(--default-cell-3));
+  --cell-1: calc(var(--initial-cell-1) * var(--activate-initial-1) + var(--default-cell-1));
+  --cell-2: calc(var(--initial-cell-2) * var(--activate-initial-2) + var(--default-cell-2));
+  --cell-3: calc(var(--initial-cell-3) * var(--activate-initial-3) + var(--default-cell-3));
 
   counter-reset:
     output-cell-1 var(--cell-1)
@@ -79,9 +81,9 @@
   ;
 }
 
-@keyframes animation-initial-val-1 {10% {--initial-cell-real-1: var(--initial-cell-1);}}
-@keyframes animation-initial-val-2 {10% {--initial-cell-real-2: var(--initial-cell-2);}}
-@keyframes animation-initial-val-3 {10% {--initial-cell-real-3: var(--initial-cell-3);}}
+@keyframes animation-initial-val-1 {0.1% {--activate-initial-1: 1;}}
+@keyframes animation-initial-val-2 {0.1% {--activate-initial-2: 1;}}
+@keyframes animation-initial-val-3 {0.1% {--activate-initial-3: 1;}}
 
 @keyframes animation-val-1 {10% {--default-cell-1: 1;}}
 @keyframes animation-val-2 {10% {--default-cell-2: 1;}}

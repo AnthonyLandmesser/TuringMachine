@@ -7,21 +7,54 @@
   --left: 0;
   --right: 1;
 
-  /* initial pos */
-  --pos: 1;
   --cell-cur: 0;
-  --state-cur: 1;
-  --state-next: var(--not-cell-cur) * var(--off-state-next-1) + var(--cell-cur) * var(--on-state-next-1);
-  --info-next: var(--not-cell-cur) * var(--off-info-next-1) + var(--cell-cur) * var(--on-info-next-1);
+  --play-cap: paused;
 
-  animation-name: operation-cycle;
-  animation-duration: 8s;
+  /* initial pos */
+  --pos: 0;
+  --state-cur: 1;
+
+  --cell-cur-start: calc(mod(clamp(0, var(--pos) + 1, 2), 2) * 2);
+  --cell-cur-end: calc(mod(clamp(0, var(--pos) - var(--num-cells), 2), 2) * 3);
+  --cell-cur-total: calc(var(--cell-cur-start) + var(--cell-cur) + var(--cell-cur-end));
+
+  --state-next-off: calc(mod(clamp(0, var(--cell-cur-total) + 1, 2), 2) * var(--off-state-next));
+  --state-next-on: calc(mod(clamp(0, var(--cell-cur-total) + 0, 2), 2) * var(--on-state-next));
+  --state-next-start: calc(mod(clamp(0, var(--cell-cur-total) - 1, 2), 2) * var(--start-state-next));
+  --state-next-end: calc(mod(clamp(0, var(--cell-cur-total) - 2, 2), 2) * var(--end-state-next));
+  --state-next: calc(var(--state-next-off) + var(--state-next-on) + var(--state-next-start) + var(--state-next-end));
+
+  --info-next-off: calc(mod(clamp(0, var(--cell-cur-total) + 1, 2), 2) * var(--off-info-next));
+  --info-next-on: calc(mod(clamp(0, var(--cell-cur-total) + 0, 2), 2) * var(--on-info-next));
+  --info-next-start: calc(mod(clamp(0, var(--cell-cur-total) - 1, 2), 2) * var(--start-info-next));
+  --info-next-end: calc(mod(clamp(0, var(--cell-cur-total) - 2, 2), 2) * var(--end-info-next));
+  --info-next: calc(var(--info-next-off) + var(--info-next-on) + var(--info-next-start) + var(--info-next-end));
+
+  animation-name: operation-cycle, setup-tape;
+  animation-duration: 8s, 0.1s;
   animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-play-state: paused;
+  animation-iteration-count: infinite, 1;
+  animation-play-state: paused, running;
   --container-1: normal;
   --container-2: size;
   --opcode: 0;
+}
+
+@keyframes setup-tape {
+  80% {
+    --container-1: size;
+    --opcode: 8;
+  }
+  /* makes firefox update consistently */
+  90% {
+    --opcode: 0;
+  }
+}
+
+@container (height: 8px) {
+  #child-1 {
+    --setup-play: running;
+  }
 }
 
 @keyframes operation-cycle {
@@ -88,8 +121,9 @@
 #child-1 {
   animation-name: var(--animation-val) var(--animation-pos) var(--animation-states) end;
   animation-duration: 3s;
+  /* animation-fill-mode: forwards; */
   animation-timing-function: linear;
-  animation-play-state: var(--animation-val-play-states) var(--animation-pos-play-states) var(--animation-state-play-state) paused;
+  animation-play-state: var(--animation-val-play-states) var(--animation-pos-play-states) var(--animation-state-play-state) var(--play-cap);
 
   --actions-msg: calc(mod(clamp(0, var(--opcode) + 1, 2), 2) * var(--info-next));
   --pos-msg: calc(mod(clamp(0, var(--opcode) + 0, 2), 2) * var(--pos));

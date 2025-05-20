@@ -1,30 +1,31 @@
 #tape {
   position: absolute;
   background-color: red;
-  font-size: 50px;
+  font-size: 100px;
+  font-family:'Courier New';
   &::after {
-    content: var(--output-cells);
+    content: "$" var(--output-cells) "€";
   }
 }
 
 #info {
   position: absolute;
-  margin-top: 60px;
+  margin-top: 120px;
   background-color: blue;
   font-size: 50px;
   &::after {
-    counter-reset: p var(--cell-cur) q var(--pos);
+    counter-reset: p var(--cell-cur-total) q var(--pos);
     content: "cur:" counter(p) ", pos:" counter(q);
   }
 }
 
 #run {
   position: absolute;
-  margin-top: 125px;
+  margin-top: 185px;
 }
 
 label {
   position: absolute;
-  margin-top: 123px;
+  margin-top: 183px;
   margin-left: 25px;
 }
