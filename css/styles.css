@@ -14,7 +14,7 @@
   font-size: 50px;
   &::after {
     counter-reset: p var(--cell-cur) q var(--pos);
-    content: "cur: " counter(p) ", pos:" counter(q);
+    content: "cur:" counter(p) ", pos:" counter(q);
   }
 }
 

@@ -21,49 +21,49 @@
   animation-play-state: paused;
   --container-1: normal;
   --container-2: size;
-  --opcode: 0px;
+  --opcode: 0;
 }
 
 @keyframes operation-cycle {
   0% {
     --container-1: normal;
     --container-2: size;
-    --opcode: 0px;
+    --opcode: 0;
   }
   12.5% {
     --container-1: normal;
     --container-2: size;
-    --opcode: 1px;
+    --opcode: 1;
   }
   25% {
     --container-1: normal;
     --container-2: size;
-    --opcode: 2px;
+    --opcode: 2;
   }
   37.5% {
     --container-1: size;
     --container-2: normal;
-    --opcode: 3px;
+    --opcode: 3;
   }
   50% {
     --container-1: size;
     --container-2: normal;
-    --opcode: 4px;
+    --opcode: 4;
   }
   62.5% {
     --container-1: size;
     --container-2: normal;
-    --opcode: 5px;
+    --opcode: 5;
   }
   75% {
     --container-1: size;
     --container-2: normal;
-    --opcode: 6px;
+    --opcode: 6;
   }
   87.5% {
     --container-1: normal;
     --container-2: size;
-    --opcode: 7px;
+    --opcode: 7;
   }
 }
 
@@ -76,12 +76,12 @@
 }
 
 #parent-1 {
-  height: var(--opcode);
+  height: calc(var(--opcode) * 1px);
   container-type: var(--container-1);
 }
 
 #parent-2 {
-  height: var(--opcode);
+  height: calc(var(--opcode) * 1px);
   container-type: var(--container-2);
 }
 
@@ -93,8 +93,8 @@
 
   --actions-msg: calc(mod(clamp(0, var(--opcode) + 1, 2), 2) * var(--info-next));
   --pos-msg: calc(mod(clamp(0, var(--opcode) + 0, 2), 2) * var(--pos));
-  --state-msg: calc(mod(clamp(0, var(--opcode) - 1, 2), 2) * var(--next-state));
-  width: calc((var(--action-msg) + var(--pos-msg) + var(--state-msg)) * 1px);
+  --state-msg: calc(mod(clamp(0, var(--opcode) - 1, 2), 2) * var(--state-next));
+  width: calc((var(--actions-msg) + var(--pos-msg) + var(--state-msg)) * 1px);
 }
 
 /*receives reset of child 1*/
@@ -114,14 +114,22 @@
 
   --go: 1;
   --dir: 1;
+  --write: 0;
   --reset-msg: calc(mod(clamp(0, var(--opcode) - 2, 2), 2) * var(--go) * var(--pos));
-  --pos-msg: calc(mod(clamp(0, var(--opcode) - 3, 2), 2) * var(--write) * var(--pos));
-  --state-msg: calc(mod(clamp(0, var(--opcode) - 4, 2), 2) * (var(--dir) + var(--pos)));
+  --write-msg: calc(mod(clamp(0, var(--opcode) - 3, 2), 2) * var(--write) * var(--pos));
+  --pos-msg: calc(mod(clamp(0, var(--opcode) - 4, 2), 2) * (var(--dir) + var(--pos)));
   --state-msg: calc(mod(clamp(0, var(--opcode) - 5, 2), 2) * var(--state-cur));
   width: calc((var(--reset-msg) + var(--write-msg) + var(--pos-msg) + var(--state-msg)) * 1px);
 }
 
+/* allows display info to be shared to display divs*/
 @property --dir {
+  syntax: "*";
+  inherits: true;
+}
+
+/* fixes chrome not updating container state */
+@property --container-1 {
   syntax: "*";
   inherits: true;
 }
