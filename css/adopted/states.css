@@ -7,6 +7,9 @@
   --on-info-next-2: calc(var(--on-dir-2) * 2 + var(--on-val-2));
   --on-info-next-3: calc(var(--on-dir-3) * 2 + var(--on-val-3));
   
+  --start-info-next: 2;
+  --end-info-next: 0;
+
   --selection-state-halt: paused;
   --selection-state-1: paused;
   --selection-state-2: paused;
@@ -28,9 +31,9 @@
 }
 
 @keyframes animation-state-halt {10% {--state-cur: 0; --state-next: 0; --info-next: 4;}}
-@keyframes animation-state-1 {10% {--state-cur: 1; --state-next: var(--not-cell-cur) * var(--off-state-next-1) + var(--cell-cur) * var(--on-state-next-1); --info-next: var(--not-cell-cur) * var(--off-info-next-1) + var(--cell-cur) * var(--on-info-next-1);}}
-@keyframes animation-state-2 {10% {--state-cur: 2; --state-next: var(--not-cell-cur) * var(--off-state-next-2) + var(--cell-cur) * var(--on-state-next-2); --info-next: var(--not-cell-cur) * var(--off-info-next-2) + var(--cell-cur) * var(--on-info-next-2);}}
-@keyframes animation-state-3 {10% {--state-cur: 3; --state-next: var(--not-cell-cur) * var(--off-state-next-3) + var(--cell-cur) * var(--on-state-next-3); --info-next: var(--not-cell-cur) * var(--off-info-next-3) + var(--cell-cur) * var(--on-info-next-3);}}
+@keyframes animation-state-1 {10% {--state-cur: 1; --off-state-next: var(--off-state-next-1); --on-state-next: var(--on-state-next-1); --start-state-next: var(--start-state-next-1); --end-state-next: var(--end-state-next-1); --off-info-next: var(--off-info-next-1); --on-info-next: var(--on-info-next-1);}}
+@keyframes animation-state-2 {10% {--state-cur: 2; --off-state-next: var(--off-state-next-2); --on-state-next: var(--on-state-next-2); --start-state-next: var(--start-state-next-2); --end-state-next: var(--end-state-next-2); --off-info-next: var(--off-info-next-2); --on-info-next: var(--on-info-next-2);}}
+@keyframes animation-state-3 {10% {--state-cur: 3; --off-state-next: var(--off-state-next-3); --on-state-next: var(--on-state-next-3); --start-state-next: var(--start-state-next-3); --end-state-next: var(--end-state-next-3); --off-info-next: var(--off-info-next-3); --on-info-next: var(--on-info-next-3);}}
 
 @container (width: 0px) and (height: 2px) {#child-2 {--selection-state-halt: running;}}
 @container (width: 1px) and (height: 2px) {#child-2 {--selection-state-1: running;}}

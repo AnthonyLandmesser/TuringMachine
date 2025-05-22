@@ -1,13 +1,13 @@
 :root {
-  --off-state-next-1: 1; --on-state-next-1: 1;
+  --off-state-next-1: 1; --on-state-next-1: 1; --start-state-next-1: 1; --end-state-next-1: 1;
   --off-dir-1: var(--left); --on-dir-1: var(--right);
   --off-val-1: var(--off); --on-val-1: var(--on);
 
-  --off-state-next-2: var(halt); --on-state-next-2: var(halt);
+  --off-state-next-2: var(--halt); --on-state-next-2: var(--halt); --start-state-next-2: var(--halt); --end-state-next-2: var(--halt);
   --off-dir-2: var(--left); --on-dir-2: var(--right);
   --off-val-2: var(--off); --on-val-2: var(--on);
 
-  --off-state-next-3: var(halt); --on-state-next-3: var(halt);
+  --off-state-next-3: var(--halt); --on-state-next-3: var(--halt); --start-state-next-3: var(--halt); --end-state-next-3: var(--halt);
   --off-dir-3: var(--left); --on-dir-3: var(--right);
   --off-val-3: var(--off); --on-val-3: var(--on);
 }

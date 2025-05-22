@@ -30,21 +30,6 @@
   --selection-pos-3: paused;
 }
 
-@property --output-cells {
-  syntax: "*";
-  inherits: true;
-}
-
-@property --pos {
-  syntax: "*";
-  inherits: true;
-}
-
-@property --cell-cur-total {
-  syntax: "*";
-  inherits: true;
-}
-
 .child {
   --animation-val:
     var(--animation-val-1),

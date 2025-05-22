@@ -10,10 +10,29 @@
   --cell-cur: 0;
   --play-cap: paused;
 
-  /* initial pos */
+  /* initial values */
   --pos: 0;
   --state-cur: 1;
+  --start-state-next: var(--start-state-next-1);
 
+  --off-state-next: 0;
+  --on-state-next: 0;
+  --end-state-next: 0;
+  --off-info-next: 0;
+  --on-info-next: 0;
+
+  animation-name: operation-cycle, setup-tape;
+  animation-duration: 8s, 0.1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite, 1;
+  animation-play-state: paused, running;
+  --container-1: normal;
+  --container-2: size;
+  --opcode: 0;
+  --disable-opcode: 9;
+}
+
+.child {
   --cell-cur-start: calc(mod(clamp(0, var(--pos) + 1, 2), 2) * 2);
   --cell-cur-end: calc(mod(clamp(0, var(--pos) - var(--num-cells), 2), 2) * 3);
   --cell-cur-total: calc(var(--cell-cur-start) + var(--cell-cur) + var(--cell-cur-end));
@@ -29,23 +48,17 @@
   --info-next-start: calc(mod(clamp(0, var(--cell-cur-total) - 1, 2), 2) * var(--start-info-next));
   --info-next-end: calc(mod(clamp(0, var(--cell-cur-total) - 2, 2), 2) * var(--end-info-next));
   --info-next: calc(var(--info-next-off) + var(--info-next-on) + var(--info-next-start) + var(--info-next-end));
-
-  animation-name: operation-cycle, setup-tape;
-  animation-duration: 8s, 0.1s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite, 1;
-  animation-play-state: paused, running;
-  --container-1: normal;
-  --container-2: size;
-  --opcode: 0;
 }
 
 @keyframes setup-tape {
-  80% {
-    --container-1: size;
+  /* makes firefox update more consistently */
+  70% {
+    --disable-opcode: 0;
     --opcode: 8;
   }
-  /* makes firefox update consistently */
+  80% {
+    --container-1: size;
+  }
   90% {
     --opcode: 0;
   }
@@ -102,6 +115,7 @@
 
 :root:has(#run:checked) {
   animation-play-state: running;
+  --disable-opcode: 0;
 }
 
 #grand-parent {
@@ -109,12 +123,12 @@
 }
 
 #parent-1 {
-  height: calc(var(--opcode) * 1px);
+  height: calc((var(--opcode) + var(--disable-opcode)) * 1px);
   container-type: var(--container-1);
 }
 
 #parent-2 {
-  height: calc(var(--opcode) * 1px);
+  height: calc((var(--opcode) + var(--disable-opcode)) * 1px);
   container-type: var(--container-2);
 }
 
@@ -134,12 +148,12 @@
 /*receives reset of child 1*/
 @container (height: 3px) {
   #child-1 {
-    animation-name: var(--animation-val);
+    animation-name: var(--animation-val) end;
   }
 }
 
 #child-2 {
-  --animation-actions: animation-action-0, animation-action-1, animation-action-2, animation-action-3, halt;
+  --animation-actions: animation-action-0, animation-action-1, animation-action-2, animation-action-3, halt,;
   --animation-actions-play-states: paused, paused, paused, paused, paused,;
   animation-name: var(--animation-actions) var(--animation-pos) var(--animation-states) end;
   animation-duration: 3s;
@@ -157,7 +171,17 @@
 }
 
 /* allows display info to be shared to display divs*/
-@property --dir {
+@property --output-cells {
+  syntax: "*";
+  inherits: true;
+}
+
+@property --pos {
+  syntax: "*";
+  inherits: true;
+}
+
+@property --cell-cur-total {
   syntax: "*";
   inherits: true;
 }
