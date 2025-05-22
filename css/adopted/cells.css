@@ -1,9 +1,9 @@
 :root {
   --num-cells: 3;
 
-  --animation-val-1: animation-initial-val-1, animation-val-1;
-  --animation-val-2: animation-initial-val-2, animation-val-2;
-  --animation-val-3: animation-initial-val-3, animation-val-3;
+  --animation-val-1: animation-initial-val-1, animation-val-1,;
+  --animation-val-2: animation-initial-val-2, animation-val-2,;
+  --animation-val-3: animation-initial-val-3, animation-val-3,;
 
   --selection-val-1: paused;
   --selection-val-2: paused;
@@ -32,9 +32,9 @@
 
 .child {
   --animation-val:
-    var(--animation-val-1),
-    var(--animation-val-2),
-    var(--animation-val-3),
+    var(--animation-val-1)
+    var(--animation-val-2)
+    var(--animation-val-3)
   ;
 
   --animation-val-play-states:

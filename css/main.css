@@ -170,6 +170,43 @@
   width: calc((var(--reset-msg) + var(--write-msg) + var(--pos-msg) + var(--state-msg)) * 1px);
 }
 
+/* debug */
+@property --state-next {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* @property --info-next {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+} */
+
+@property --info-next-on {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --info-next-off {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --info-next-start {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --info-next-end {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
 /* allows display info to be shared to display divs*/
 @property --output-cells {
   syntax: "*";
