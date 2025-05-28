@@ -193,7 +193,7 @@
   initial-value: 0;
 }
 
-@property --state-next {
+@property --state-msg {
   syntax: "<integer>";
   inherits: true;
   initial-value: 0;

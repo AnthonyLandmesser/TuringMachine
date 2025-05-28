@@ -42,7 +42,7 @@
     var(--setup-play), var(--selection-val-1),
     var(--setup-play), var(--selection-val-2),
     var(--setup-play), var(--selection-val-3),
-  var(--selection-pos-end),;
+  ;
 
   --cell-1: calc(var(--initial-cell-1) * var(--activate-initial-1) + var(--default-cell-1));
   --cell-2: calc(var(--initial-cell-2) * var(--activate-initial-2) + var(--default-cell-2));
@@ -64,7 +64,7 @@
     var(--selection-pos-1),
     var(--selection-pos-2),
     var(--selection-pos-3),
-  ;
+  var(--selection-pos-end),;
 }
 
 @keyframes animation-initial-val-1 {0.1% {--activate-initial-1: 1;}}
