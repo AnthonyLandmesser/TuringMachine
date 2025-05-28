@@ -9,6 +9,7 @@
   --selection-val-2: paused;
   --selection-val-3: paused;
 
+  --selection-pos-end: paused;
   --setup-play: paused;
   
   --activate-initial-1: 0;
@@ -23,7 +24,7 @@
     animation-pos-1,
     animation-pos-2,
     animation-pos-3,
-  ;
+  animation-pos-end,;
   
   --selection-pos-1: paused;
   --selection-pos-2: paused;
@@ -41,7 +42,7 @@
     var(--setup-play), var(--selection-val-1),
     var(--setup-play), var(--selection-val-2),
     var(--setup-play), var(--selection-val-3),
-  ;
+  var(--selection-pos-end),;
 
   --cell-1: calc(var(--initial-cell-1) * var(--activate-initial-1) + var(--default-cell-1));
   --cell-2: calc(var(--initial-cell-2) * var(--activate-initial-2) + var(--default-cell-2));
@@ -87,11 +88,14 @@
 @keyframes animation-pos-1 {10% {--pos: 1; --cell-cur: var(--cell-1);}}
 @keyframes animation-pos-2 {10% {--pos: 2; --cell-cur: var(--cell-2);}}
 @keyframes animation-pos-3 {10% {--pos: 3; --cell-cur: var(--cell-3);}}
+@keyframes animation-pos-end {10% {--pos: 4; --cell-cur: 0;}}
 
 @container (width: 1px) and (height: 1px) {#child-2 {--selection-pos-1: running;}}
 @container (width: 2px) and (height: 1px) {#child-2 {--selection-pos-2: running;}}
 @container (width: 3px) and (height: 1px) {#child-2 {--selection-pos-3: running;}}
+@container (width: 4px) and (height: 1px) {#child-2 {--selection-pos-end: running;}}
 
 @container (width: 1px) and (height: 5px) {#child-1 {--selection-pos-1: running;}}
 @container (width: 2px) and (height: 5px) {#child-1 {--selection-pos-2: running;}}
 @container (width: 3px) and (height: 5px) {#child-1 {--selection-pos-3: running;}}
+@container (width: 4px) and (height: 5px) {#child-1 {--selection-pos-end: running;}}

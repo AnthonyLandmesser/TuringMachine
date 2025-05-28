@@ -171,6 +171,18 @@
 }
 
 /* debug */
+@property --height {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --width {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
 @property --state-next {
   syntax: "<integer>";
   inherits: true;
