@@ -21,7 +21,7 @@
 
 #signal {
   position: absolute;
-  margin-top: 175px;
+  top: 190px;
   background-color: green;
   font-size: 50px;
   &::after {

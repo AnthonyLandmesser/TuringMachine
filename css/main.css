@@ -31,7 +31,7 @@
   --opcode: 0;
   --disable-opcode: 9;
 
-  --hieght: calc(var(--opcode) + var(--disable-opcode));
+  --height: calc(var(--opcode) + var(--disable-opcode));
 }
 
 .child {
@@ -125,12 +125,12 @@
 }
 
 #parent-1 {
-  height: calc(var(--hieght) * 1px);
+  height: calc(var(--height) * 1px);
   container-type: var(--container-1);
 }
 
 #parent-2 {
-  height: calc(var(--hieght) * 1px);
+  height: calc(var(--height) * 1px);
   container-type: var(--container-2);
 }
 
