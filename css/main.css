@@ -30,6 +30,8 @@
   --container-2: size;
   --opcode: 0;
   --disable-opcode: 9;
+
+  --hieght: calc(var(--opcode) + var(--disable-opcode));
 }
 
 .child {
@@ -123,12 +125,12 @@
 }
 
 #parent-1 {
-  height: calc((var(--opcode) + var(--disable-opcode)) * 1px);
+  height: calc(var(--hieght) * 1px);
   container-type: var(--container-1);
 }
 
 #parent-2 {
-  height: calc((var(--opcode) + var(--disable-opcode)) * 1px);
+  height: calc(var(--hieght) * 1px);
   container-type: var(--container-2);
 }
 
@@ -142,7 +144,8 @@
   --actions-msg: calc(mod(clamp(0, var(--opcode) + 1, 2), 2) * var(--info-next));
   --pos-msg: calc(mod(clamp(0, var(--opcode) + 0, 2), 2) * var(--pos));
   --state-msg: calc(mod(clamp(0, var(--opcode) - 1, 2), 2) * var(--state-next));
-  width: calc((var(--actions-msg) + var(--pos-msg) + var(--state-msg)) * 1px);
+  --width-1: calc(var(--actions-msg) + var(--pos-msg) + var(--state-msg));
+  width: calc(var(--width-1) * 1px);
 }
 
 /*receives reset of child 1*/
@@ -167,7 +170,8 @@
   --write-msg: calc(mod(clamp(0, var(--opcode) - 3, 2), 2) * var(--write) * var(--pos));
   --pos-msg: calc(mod(clamp(0, var(--opcode) - 4, 2), 2) * (var(--dir) + var(--pos)));
   --state-msg: calc(mod(clamp(0, var(--opcode) - 5, 2), 2) * var(--state-cur));
-  width: calc((var(--reset-msg) + var(--write-msg) + var(--pos-msg) + var(--state-msg)) * 1px);
+  --width-2: calc(var(--reset-msg) + var(--write-msg) + var(--pos-msg) + var(--state-msg));
+  width: calc(var(--width-2) * 1px);
 }
 
 /* debug */
@@ -177,7 +181,13 @@
   initial-value: 0;
 }
 
-@property --width {
+@property --width-1 {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --width-2 {
   syntax: "<integer>";
   inherits: true;
   initial-value: 0;
