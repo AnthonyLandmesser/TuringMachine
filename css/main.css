@@ -88,7 +88,13 @@
     --container-2: size;
     --opcode: 2;
   }
+  /* for firefox */
   37.5% {
+    --container-1: size;
+    --container-2: size;
+    --opcode: 3;
+  }
+  40% {
     --container-1: size;
     --container-2: normal;
     --opcode: 3;
@@ -108,7 +114,13 @@
     --container-2: normal;
     --opcode: 6;
   }
+  /* for firefox */
   87.5% {
+    --container-1: size;
+    --container-2: size;
+    --opcode: 7;
+  }
+  90% {
     --container-1: normal;
     --container-2: size;
     --opcode: 7;
@@ -205,6 +217,24 @@
   initial-value: 0;
 } */
 
+@property --cell-cur-end {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --cell-cur-start {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --cell-cur-total {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
 @property --info-next-on {
   syntax: "<integer>";
   inherits: true;
@@ -240,10 +270,10 @@
   inherits: true;
 }
 
-@property --cell-cur-total {
+/* @property --cell-cur-total {
   syntax: "*";
-  inherits: true;
-}
+  inherits: false;
+} */
 
 /* fixes chrome not updating container state */
 @property --container-1 {
