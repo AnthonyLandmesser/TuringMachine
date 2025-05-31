@@ -85,7 +85,7 @@
 @container (width: 2px) and (height: 4px) {#child-1 {--selection-val-2: running;}}
 @container (width: 3px) and (height: 4px) {#child-1 {--selection-val-3: running;}}
 
-@keyframes animation-pos-1 {10% {--pos: 1; --cell-cur: var(--cell-1);}}
+@keyframes animation-pos-1 {10% {--pos: 1; --cell-cur: calc(var(--cell-1) * 1);}}
 @keyframes animation-pos-2 {10% {--pos: 2; --cell-cur: var(--cell-2);}}
 @keyframes animation-pos-3 {10% {--pos: 3; --cell-cur: var(--cell-3);}}
 @keyframes animation-pos-end {10% {--pos: 4; --cell-cur: 0;}}
