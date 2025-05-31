@@ -1,3 +1,7 @@
+html {
+  background-color: gray;
+}
+
 #tape {
   position: absolute;
   background-color: red;
