@@ -34,6 +34,19 @@
   --height: calc(var(--opcode) + var(--disable-opcode));
 }
 
+/* fixes chrome not updating container state */
+@property --container-1 {
+  syntax: "*";
+  inherits: true;
+  initial-value: size;
+}
+
+@property --container-2 {
+  syntax: "*";
+  inherits: true;
+  initial-value: size;
+}
+
 .child {
   --cell-cur-start: calc(mod(clamp(0, var(--pos) + 1, 2), 2) * 2);
   --cell-cur-end: calc(mod(clamp(0, var(--pos) - var(--num-cells), 2), 2) * 3);
@@ -274,12 +287,6 @@
   syntax: "*";
   inherits: false;
 } */
-
-/* fixes chrome not updating container state */
-@property --container-1 {
-  syntax: "*";
-  inherits: true;
-}
 
 /* save actions */
 @container (width: 0px) and (height: 0px) {
