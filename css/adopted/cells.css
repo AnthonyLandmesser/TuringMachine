@@ -65,6 +65,16 @@
     var(--selection-pos-2),
     var(--selection-pos-3),
   var(--selection-pos-end),;
+
+  --cell-cur-1: calc(mod(clamp(0, var(--pos) - 0, 2), 2) * var(--cell-1));
+  --cell-cur-2: calc(mod(clamp(0, var(--pos) - 1, 2), 2) * var(--cell-2));
+  --cell-cur-3: calc(mod(clamp(0, var(--pos) - 2, 2), 2) * var(--cell-3));
+
+  --cell-cur: calc(
+    var(--cell-cur-1) +
+    var(--cell-cur-2) +
+    var(--cell-cur-3) +
+  0);
 }
 
 @keyframes animation-initial-val-1 {0.1% {--activate-initial-1: 1;}}
@@ -85,10 +95,10 @@
 @container (width: 2px) and (height: 4px) {#child-1 {--selection-val-2: running;}}
 @container (width: 3px) and (height: 4px) {#child-1 {--selection-val-3: running;}}
 
-@keyframes animation-pos-1 {10% {--pos: 1; --cell-cur: var(--cell-1);}}
-@keyframes animation-pos-2 {10% {--pos: 2; --cell-cur: var(--cell-2);}}
-@keyframes animation-pos-3 {10% {--pos: 3; --cell-cur: var(--cell-3);}}
-@keyframes animation-pos-end {10% {--pos: 4; --cell-cur: 0;}}
+@keyframes animation-pos-1 {10% {--pos: 1;}}
+@keyframes animation-pos-2 {10% {--pos: 2;}}
+@keyframes animation-pos-3 {10% {--pos: 3;}}
+@keyframes animation-pos-end {10% {--pos: 4;}}
 
 @property --cell-cur {
   syntax: "<integer>";
