@@ -2,6 +2,14 @@ html {
   background-color: gray;
 }
 
+#grand-parent {
+  position: absolute;
+}
+
+#spacer {
+  height: 250px;
+}
+
 #tape {
   position: absolute;
   background-color: red;
@@ -16,6 +24,7 @@ html {
   position: absolute;
   margin-top: 120px;
   background-color: blue;
+  width: 650px;
   font-size: 50px;
   &::after {
     counter-reset: w var(--width-1) h var(--height) p var(--cell-cur-total) q var(--pos);
@@ -25,7 +34,7 @@ html {
 
 #signal {
   position: absolute;
-  top: 190px;
+  top: 185px;
   background-color: green;
   font-size: 50px;
   &::after {
@@ -34,18 +43,11 @@ html {
   }
 }
 
-#run {
-  position: absolute;
-  margin-top: 250px;
+#reset {
+  display: block;
 }
 
 #run-label {
-  position: absolute;
-  margin-top: 248px;
-  margin-left: 25px;
-}
-
-#reset {
-  position: absolute;
-  margin-top: 270px;
+  position: relative;
+  top: -2px;
 }
