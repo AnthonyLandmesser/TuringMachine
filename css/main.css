@@ -145,6 +145,13 @@
   --disable-opcode: 0;
 }
 
+:root:has(#reset:active) {
+  animation-name: initial;
+  .child {
+    animation-name: initial;
+  }
+}
+
 #grand-parent {
   width: fit-content;
 }

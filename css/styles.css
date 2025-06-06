@@ -39,8 +39,13 @@ html {
   margin-top: 250px;
 }
 
-label {
+#run-label {
   position: absolute;
   margin-top: 248px;
   margin-left: 25px;
+}
+
+#reset {
+  position: absolute;
+  margin-top: 270px;
 }
