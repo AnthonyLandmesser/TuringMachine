@@ -167,6 +167,8 @@
 }
 
 #child-1 {
+  container-type: size;
+
   animation-name: var(--animation-val) var(--animation-pos) var(--animation-states) end;
   animation-duration: 3s;
   /* animation-fill-mode: forwards; */
@@ -178,6 +180,10 @@
   --state-msg: calc(mod(clamp(0, var(--opcode) - 1, 2), 2) * var(--state-next));
   --width-1: calc(var(--actions-msg) + var(--pos-msg) + var(--state-msg));
   width: calc(var(--width-1) * 1px);
+  height: calc(var(--height) * 1px);
+
+  --state-main: var(--state-cur);
+  --pos-main: var(--pos);
 }
 
 /*receives reset of child 1*/
@@ -204,6 +210,29 @@
   --state-msg: calc(mod(clamp(0, var(--opcode) - 5, 2), 2) * var(--state-cur));
   --width-2: calc(var(--reset-msg) + var(--write-msg) + var(--pos-msg) + var(--state-msg));
   width: calc(var(--width-2) * 1px);
+}
+
+#container {
+  --dir: 0;
+  --write: 0;
+  --pos: 0;
+  --state-cur: 0;
+
+  --animation-actions: animation-action-0, animation-action-1, animation-action-2, animation-action-3, halt,;
+  --animation-actions-play-states: paused, paused, paused, paused, paused,;
+  animation-name: var(--animation-pos) var(--animation-states) var(--animation-actions) end;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-play-state: var(--animation-pos-play-states) var(--animation-state-play-state) var(--animation-actions-play-states) paused;
+
+  --switch-sub: calc(clamp(0, mod(var(--opcode), 7) - 2, 1));
+  --switch-main: calc(var(--switch-sub) * -1 + 1);
+
+  --pos-sub: calc(var(--pos) + var(--dir));
+  --state-sub: var(--state-cur);
+
+  --pos-actual: calc(var(--pos-main) * var(--switch-main) + var(--pos-sub) * var(--switch-sub));
+  --state-actual: calc(var(--state-main) * var(--switch-main) + var(--state-sub) * var(--switch-sub));
 }
 
 /* debug */
@@ -280,12 +309,41 @@
 }
 
 /* allows display info to be shared to display divs*/
-@property --output-cells {
+@property --switch-main {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --switch-sub {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --state-main {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --state-actual {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --pos-main {
   syntax: "*";
   inherits: true;
 }
 
-@property --pos {
+@property --pos-actual {
+  syntax: "*";
+  inherits: true;
+}
+
+@property --output-cells {
   syntax: "*";
   inherits: true;
 }
@@ -297,7 +355,7 @@
 
 /* save actions */
 @container (width: 0px) and (height: 0px) {
-  #child-2 {
+  #child-2, #container {
     --animation-actions-play-states: running, paused, paused, paused, paused,;
   }
 }
@@ -310,7 +368,7 @@
 }
 
 @container (width: 1px) and (height: 0px) {
-  #child-2 {
+  #child-2, #container {
     --animation-actions-play-states: paused, running, paused, paused, paused,;
   }
 }
@@ -323,7 +381,7 @@
 }
 
 @container (width: 2px) and (height: 0px) {
-  #child-2 {
+  #child-2, #container {
     --animation-actions-play-states: paused, paused, running, paused, paused,;
   }
 }
@@ -336,7 +394,7 @@
 }
 
 @container (width: 3px) and (height: 0px) {
-  #child-2 {
+  #child-2, #container {
     --animation-actions-play-states: paused, paused, paused, running, paused,;
   }
 }
@@ -349,7 +407,7 @@
 }
 
 @container (width: 4px) and (height: 0px) {
-  #child-2 {
+  #child-2, #container {
     --animation-actions-play-states: paused, paused, paused, paused, running,;
   }
 }
@@ -364,7 +422,7 @@
 
 /*receives reset of child 2*/
 @container (height: 7px) {
-  #child-2 {
+  #child-2, #container {
     animation-name: initial;
   }
 }

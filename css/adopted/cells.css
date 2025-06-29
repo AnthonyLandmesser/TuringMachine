@@ -28,7 +28,7 @@
   
   --selection-pos-1: paused;
   --selection-pos-2: paused;
-  --selection-pos-3: paused;
+  --selection-pos-3: paused;  
 }
 
 .child {
@@ -42,22 +42,6 @@
     var(--setup-play), var(--selection-val-1),
     var(--setup-play), var(--selection-val-2),
     var(--setup-play), var(--selection-val-3),
-  ;
-
-  --cell-1: calc(var(--initial-cell-1) * var(--activate-initial-1) + var(--default-cell-1));
-  --cell-2: calc(var(--initial-cell-2) * var(--activate-initial-2) + var(--default-cell-2));
-  --cell-3: calc(var(--initial-cell-3) * var(--activate-initial-3) + var(--default-cell-3));
-
-  counter-reset:
-    output-cell-1 var(--cell-1)
-    output-cell-2 var(--cell-2)
-    output-cell-3 var(--cell-3)
-  ;
-
-  --output-cells:
-    counter(output-cell-1)
-    counter(output-cell-2)
-    counter(output-cell-3)
   ;
 
   --animation-pos-play-states:
@@ -75,7 +59,59 @@
     var(--cell-cur-2) +
     var(--cell-cur-3) +
   0);
+
+  --cell-1: calc(var(--initial-cell-1) * var(--activate-initial-1) + var(--default-cell-1));
+  --cell-2: calc(var(--initial-cell-2) * var(--activate-initial-2) + var(--default-cell-2));
+  --cell-3: calc(var(--initial-cell-3) * var(--activate-initial-3) + var(--default-cell-3));
 }
+
+@property --cell-1 {syntax: "<integer>"; inherits: true; initial-value: 0;}
+@property --cell-2 {syntax: "<integer>"; inherits: true; initial-value: 0;}
+@property --cell-3 {syntax: "<integer>"; inherits: true; initial-value: 0;}
+
+#container {
+  --sub-pos-1: calc(mod(clamp(0, var(--pos) - 0, 2), 2));
+  --sub-pos-2: calc(mod(clamp(0, var(--pos) - 1, 2), 2));
+  --sub-pos-3: calc(mod(clamp(0, var(--pos) - 2, 2), 2));
+
+  --select-sub-1: calc(var(--switch-sub) * var(--sub-pos-1));
+  --select-sub-2: calc(var(--switch-sub) * var(--sub-pos-2));
+  --select-sub-3: calc(var(--switch-sub) * var(--sub-pos-3));
+
+  --select-main-1: calc(var(--select-sub-1) * -1 + 1);
+  --select-main-2: calc(var(--select-sub-2) * -1 + 1);
+  --select-main-3: calc(var(--select-sub-3) * -1 + 1);
+
+  --cell-1-actual: calc(var(--cell-1) * var(--select-main-1) + var(--write) * var(--select-sub-1));
+  --cell-2-actual: calc(var(--cell-2) * var(--select-main-2) + var(--write) * var(--select-sub-2));
+  --cell-3-actual: calc(var(--cell-3) * var(--select-main-3) + var(--write) * var(--select-sub-3));
+
+  counter-reset:
+    output-cell-1 var(--cell-1-actual)
+    output-cell-2 var(--cell-2-actual)
+    output-cell-3 var(--cell-3-actual)
+  ;
+
+  --output-cells:
+    counter(output-cell-1)
+    counter(output-cell-2)
+    counter(output-cell-3)
+  ;
+
+  --selection-pos-1: paused;
+  --selection-pos-2: paused;
+  --selection-pos-3: paused;
+
+  --animation-pos-play-states:
+    var(--selection-pos-1),
+    var(--selection-pos-2),
+    var(--selection-pos-3),
+  var(--selection-pos-end),;
+}
+
+/* debug */
+
+/* debug */
 
 @keyframes animation-initial-val-1 {0.1% {--activate-initial-1: 1;}}
 @keyframes animation-initial-val-2 {0.1% {--activate-initial-2: 1;}}
@@ -106,10 +142,10 @@
   initial-value: 0;
 }
 
-@container (width: 1px) and (height: 1px) {#child-2 {--selection-pos-1: running;}}
-@container (width: 2px) and (height: 1px) {#child-2 {--selection-pos-2: running;}}
-@container (width: 3px) and (height: 1px) {#child-2 {--selection-pos-3: running;}}
-@container (width: 4px) and (height: 1px) {#child-2 {--selection-pos-end: running;}}
+@container (width: 1px) and (height: 1px) {#child-2, #container {--selection-pos-1: running;}}
+@container (width: 2px) and (height: 1px) {#child-2, #container {--selection-pos-2: running;}}
+@container (width: 3px) and (height: 1px) {#child-2, #container {--selection-pos-3: running;}}
+@container (width: 4px) and (height: 1px) {#child-2, #container {--selection-pos-end: running;}}
 
 @container (width: 1px) and (height: 5px) {#child-1 {--selection-pos-1: running;}}
 @container (width: 2px) and (height: 5px) {#child-1 {--selection-pos-2: running;}}

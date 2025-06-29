@@ -24,11 +24,11 @@ html {
   position: absolute;
   margin-top: 120px;
   background-color: blue;
-  width: 650px;
+  width: 800px;
   font-size: 50px;
   &::after {
-    counter-reset: w var(--width-1) h var(--height) p var(--cell-cur-total) q var(--pos);
-    content: "width:" counter(w) ", height:" counter(h) ", cur:" counter(p) ", pos:" counter(q);
+    counter-reset: w var(--width-1) h var(--height) p var(--cell-cur-total) q var(--pos-actual) s var(--state-actual);
+    content: "width:" counter(w) ", height:" counter(h) ", cur:" counter(p) ", pos:" counter(q) ", state:" counter(s);
   }
 }
 
